@@ -175,5 +175,41 @@
     </aside>
 </main>
 <footer class="shell site-footer"><span>TRAIL STORE <span class="footer-divider">/</span> A small app. A bigger journey.</span><span>Read-only demo inventory <span class="footer-divider">/</span> <code th:text="${store.revision()}">local</code></span></footer>
+<div th:if="${store.phase() >= 3}" id="assistant" th:attr="data-phase=${store.phase()}">
+    <button class="button assistant-launch" id="open-assistant" type="button" aria-haspopup="dialog">Ask Trail <span aria-hidden="true">+</span></button>
+    <dialog id="assistant-dialog" class="assistant-panel" aria-labelledby="assistant-title">
+        <div class="assistant-header">
+            <div><p class="eyebrow">A LITTLE HELP FOR THE TRAIL</p><h2 id="assistant-title">Your trail guide</h2></div>
+            <button class="icon-button" id="close-assistant" type="button" aria-label="Close assistant">&times;</button>
+        </div>
+        <div class="assistant-body">
+            <p class="assistant-intro">Ask about products, prices, and stock. Every question starts fresh; this guide has no conversation memory.</p>
+            <p id="assistant-status" class="assistant-status" role="status">Checking availability...</p>
+            <div class="suggestions" aria-label="Example questions">
+                <button type="button" data-question="Which waterproof jackets under $150 are in stock?">Waterproof jackets under $150</button>
+                <button type="button" data-question="Is JKT-003 available? Show an in-stock alternative.">An alternative to JKT-003</button>
+                <button type="button" data-question="Show two in-stock items for a rainy day hike, with their prices and SKUs.">Gear for a rainy day</button>
+            </div>
+            <form id="assistant-form">
+                <details id="access-details">
+                    <summary>Workshop access</summary>
+                    <label for="workshop-code">Code supplied by your presenter</label>
+                    <input id="workshop-code" type="password" maxlength="128" autocomplete="off" spellcheck="false">
+                    <small>Kept in this browser tab only. Never included in your question.</small>
+                </details>
+                <label for="question">Your inventory question</label>
+                <textarea id="question" rows="3" maxlength="600" required placeholder="What would you take on a rainy day hike?"></textarea>
+                <div class="question-actions"><small>600 characters maximum</small><button class="button" id="ask-button" type="submit" disabled>Ask the inventory</button></div>
+            </form>
+            <div id="assistant-result" class="assistant-result" aria-live="polite" aria-atomic="true" hidden>
+                <p class="answer-label">TRAIL GUIDE</p>
+                <p id="assistant-answer"></p>
+                <code id="assistant-request"></code>
+            </div>
+            <p class="assistant-footnote">Spring AI + Microsoft Foundry. Read-only demo inventory. Check product cards for exact stock.</p>
+        </div>
+    </dialog>
+    <script src="/js/assistant.js" defer></script>
+</div>
 </body>
 </html>

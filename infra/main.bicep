@@ -11,6 +11,14 @@ param webAppExists bool = false
 @minValue(0)
 @maxValue(1)
 param minReplicas int = 0
+param aiLocation string = location
+param developerPrincipalId string = ''
+@secure()
+param workshopAccessCodeHash string = ''
+param modelName string = 'gpt-6-luna'
+param modelVersion string = '2026-09-22'
+@minValue(1)
+param modelCapacity int = 100
 
 resource group 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
@@ -29,6 +37,17 @@ resource previousApp 'Microsoft.App/containerApps@2025-01-01' existing = if (web
   scope: group
 }
 
+module foundry './foundry.bicep' = if (phase >= 3) {
+  name: '${environmentName}-foundry'
+  scope: group
+  params: {
+    location: aiLocation
+    modelName: modelName
+    modelVersion: modelVersion
+    modelCapacity: modelCapacity
+  }
+}
+
 module web './web.bicep' = {
   name: '${environmentName}-web'
   scope: group
@@ -40,6 +59,19 @@ module web './web.bicep' = {
     registryName: host.outputs.registryName
     image: webAppExists ? previousApp!.properties.template.containers[0].image : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
     minReplicas: minReplicas
+    modelEndpoint: phase >= 3 ? foundry!.outputs.modelEndpoint : ''
+    deploymentName: phase >= 3 ? foundry!.outputs.deploymentName : ''
+    workshopAccessCodeHash: workshopAccessCodeHash
+  }
+}
+
+module aiAccess './ai-access.bicep' = if (phase >= 3) {
+  name: '${environmentName}-ai-access'
+  scope: group
+  params: {
+    accountName: foundry!.outputs.accountName
+    appPrincipalId: web.outputs.principalId
+    developerPrincipalId: developerPrincipalId
   }
 }
 
@@ -51,3 +83,7 @@ output SERVICE_WEB_RESOURCE_NAME string = web.outputs.name
 output SERVICE_WEB_RESOURCE_ID string = web.outputs.id
 output SERVICE_WEB_URI string = web.outputs.uri
 output AZURE_CLIENT_ID string = web.outputs.clientId
+output AZURE_OPENAI_ENDPOINT string = phase >= 3 ? foundry!.outputs.modelEndpoint : ''
+output AZURE_OPENAI_DEPLOYMENT string = phase >= 3 ? foundry!.outputs.deploymentName : ''
+output AZURE_AI_PROJECT_ENDPOINT string = phase >= 3 ? foundry!.outputs.projectEndpoint : ''
+output AZURE_AI_ACCOUNT_NAME string = phase >= 3 ? foundry!.outputs.accountName : ''

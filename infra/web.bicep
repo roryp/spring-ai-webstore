@@ -5,6 +5,10 @@ param environmentId string
 param registryName string
 param image string
 param minReplicas int
+param modelEndpoint string = ''
+param deploymentName string = ''
+@secure()
+param workshopAccessCodeHash string = ''
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
   name: registryName
@@ -58,9 +62,12 @@ resource app 'Microsoft.App/containerApps@2025-01-01' = {
           image: image
           resources: { cpu: json('0.5'), memory: '1Gi' }
           env: [
-            { name: 'SPRING_PROFILES_ACTIVE', value: 'azure' }
+            { name: 'SPRING_PROFILES_ACTIVE', value: phase >= 3 ? 'azure,ai' : 'azure' }
             { name: 'STORE_PHASE', value: string(phase) }
             { name: 'AZURE_CLIENT_ID', value: identity.properties.clientId }
+            { name: 'AZURE_OPENAI_ENDPOINT', value: modelEndpoint }
+            { name: 'AZURE_OPENAI_DEPLOYMENT', value: deploymentName }
+            { name: 'WORKSHOP_ACCESS_CODE_HASH', value: workshopAccessCodeHash }
           ]
           probes: [
             {
