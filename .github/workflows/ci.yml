@@ -21,3 +21,5 @@ jobs:
           cache: maven
       - name: Verify
         run: ./mvnw -B -ntp verify
+      - name: Validate infrastructure
+        run: az bicep build --file infra/main.bicep --stdout > /dev/null

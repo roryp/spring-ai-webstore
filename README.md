@@ -47,4 +47,8 @@ There is intentionally no checkout or persistent stock management.
 
 Implementation is tracked in the [roadmap](https://github.com/roryp/spring-ai-webstore/issues/1).
 Each completed phase receives an immutable `stage-N` tag.
-Phase 1 has no container, cloud configuration, health probes, or AI integration.
+Check out `stage-1` for the standalone version without cloud dependencies.
+This checkpoint adds Azure deployment without changing the catalog.
+
+See [Azure preparation](docs/azure.md) for `azd up`, protected GitHub deployment,
+warming the app before the event, pricing, and cleanup.

@@ -1,0 +1,11 @@
+.git
+.github
+.azure
+.playwright-mcp
+.idea
+.vscode
+target
+docs
+node_modules
+*.log
+.env*
