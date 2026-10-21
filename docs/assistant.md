@@ -100,3 +100,13 @@ a canned AI answer. The UI renders model output as text, not HTML.
 
 Also check an unknown SKU, an off-topic question, and an attempted instruction
 override. These checks are preparation work. Do not try surprise prompts on stage.
+
+Run the repeatable live preflight before the event:
+
+```powershell
+.\scripts\Test-Demo.ps1 -BaseUrl <phase-3-url> -Phase 3 -SaveCapture
+```
+
+It verifies access protection, the three rehearsal outcomes, and actual catalog
+facts. The saved capture contains only synthetic questions and responses, never
+the workshop code. Warm the model before presenting; live latency can vary.

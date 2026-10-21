@@ -1,0 +1,29 @@
+{
+  "source": "Live preflight capture, not a simulated answer",
+  "capturedAt": "2026-10-21T19:05:51.9780872+00:00",
+  "phase": 3,
+  "url": "https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io",
+  "answers": [
+    {
+      "question": "Which waterproof jackets under $150 are in stock?",
+      "reply": "Trail Rain Jacket — SKU JKT-001, $99.00 USD, 12 in stock.\nStorm Shell — SKU JKT-002, $139.00 USD, 4 in stock.",
+      "requestId": "49369280-425c-4827-b0d1-af46fd6c1668",
+      "traceId": null,
+      "elapsedMs": 3186
+    },
+    {
+      "question": "Is JKT-003 available? Show an in-stock alternative.",
+      "reply": "JKT-003, Summit Waterproof Jacket, is out of stock. In-stock alternative: Trail Rain Jacket (JKT-001), $99.00 USD, 12 in stock.",
+      "requestId": "6052c57c-f48d-4263-a6ce-c12a4624c1f3",
+      "traceId": null,
+      "elapsedMs": 18342
+    },
+    {
+      "question": "Show two in-stock items for a rainy day hike, with their prices and SKUs.",
+      "reply": "Trail Rain Jacket — SKU JKT-001, $99.00 USD, 12 in stock.\nPack Rain Cover — SKU PCK-002, $15.00 USD, 18 in stock.",
+      "requestId": "814e6228-4f76-470d-8872-73b21a83452c",
+      "traceId": null,
+      "elapsedMs": 3700
+    }
+  ]
+}
