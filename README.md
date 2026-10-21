@@ -57,3 +57,7 @@ Phase 3 adds **Ask Trail**, powered by Spring AI and Microsoft Foundry.
 The default local run remains offline and credential-free. See
 [inventory chat preparation](docs/assistant.md) for the live profile, workshop
 access, limits, and the three rehearsed questions.
+
+Phase 4 adds [OpenTelemetry and the prepared trace walkthrough](docs/observability.md).
+Raw chat content is not logged. The widget shows a real trace ID when tracing is
+active; Application Insights and Foundry provide the operator views.

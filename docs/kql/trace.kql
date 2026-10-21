@@ -1,0 +1,9 @@
+// Paste the real trace ID shown below the assistant's answer.
+let TraceId = "PASTE_TRACE_ID";
+union requests, dependencies
+| where timestamp > ago(24h)
+| where operation_Id == TraceId
+| project timestamp, name, duration, success, id, operation_ParentId,
+          Operation = tostring(customDimensions["gen_ai.operation.name"]),
+          Agent = tostring(customDimensions["gen_ai.agent.id"])
+| order by timestamp asc

@@ -1,0 +1,16 @@
+// Run in the Application Insights Logs view. Counts model calls, not tool or HTTP spans.
+dependencies
+| where timestamp > ago(1h)
+| where cloud_RoleName == "trail-store-phase-4"
+| where tostring(customDimensions["gen_ai.operation.name"]) == "chat"
+| extend InputTokens = tolong(customDimensions["gen_ai.usage.input_tokens"]),
+         OutputTokens = tolong(customDimensions["gen_ai.usage.output_tokens"]),
+         CachedInputTokens = coalesce(tolong(customDimensions["gen_ai.usage.cache_read.input_tokens"]), tolong(0)),
+         Model = tostring(customDimensions["gen_ai.response.model"])
+| summarize ModelCalls = count(),
+            InputTokens = sum(InputTokens),
+            OutputTokens = sum(OutputTokens),
+            CachedInputTokens = sum(CachedInputTokens),
+            MissingUsage = countif(isnull(InputTokens) or isnull(OutputTokens))
+    by TraceId = operation_Id, Model
+| order by InputTokens desc

@@ -29,7 +29,7 @@ resource group 'Microsoft.Resources/resourceGroups@2024-03-01' = {
 module host './host.bicep' = {
   name: '${environmentName}-host'
   scope: group
-  params: { location: location }
+  params: { location: location, enableTelemetry: phase == 4 }
 }
 
 resource previousApp 'Microsoft.App/containerApps@2025-01-01' existing = if (webAppExists) {
@@ -75,6 +75,16 @@ module aiAccess './ai-access.bicep' = if (phase >= 3) {
   }
 }
 
+module telemetryConnection './telemetry-connection.bicep' = if (phase == 4) {
+  name: '${environmentName}-telemetry-connection'
+  scope: group
+  params: {
+    accountName: foundry!.outputs.accountName
+    insightsId: host.outputs.applicationInsightsId
+    connectionString: host.outputs.applicationInsightsConnectionString
+  }
+}
+
 output AZURE_RESOURCE_GROUP string = group.name
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = host.outputs.registryEndpoint
 output AZURE_CONTAINER_REGISTRY_NAME string = host.outputs.registryName
@@ -87,3 +97,5 @@ output AZURE_OPENAI_ENDPOINT string = phase >= 3 ? foundry!.outputs.modelEndpoin
 output AZURE_OPENAI_DEPLOYMENT string = phase >= 3 ? foundry!.outputs.deploymentName : ''
 output AZURE_AI_PROJECT_ENDPOINT string = phase >= 3 ? foundry!.outputs.projectEndpoint : ''
 output AZURE_AI_ACCOUNT_NAME string = phase >= 3 ? foundry!.outputs.accountName : ''
+output APPLICATIONINSIGHTS_RESOURCE_ID string = host.outputs.applicationInsightsId
+output APPLICATIONINSIGHTS_NAME string = host.outputs.applicationInsightsName

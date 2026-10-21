@@ -62,12 +62,13 @@ resource app 'Microsoft.App/containerApps@2025-01-01' = {
           image: image
           resources: { cpu: json('0.5'), memory: '1Gi' }
           env: [
-            { name: 'SPRING_PROFILES_ACTIVE', value: phase >= 3 ? 'azure,ai' : 'azure' }
+            { name: 'SPRING_PROFILES_ACTIVE', value: phase == 4 ? 'azure,ai,observe' : (phase == 3 ? 'azure,ai' : 'azure') }
             { name: 'STORE_PHASE', value: string(phase) }
             { name: 'AZURE_CLIENT_ID', value: identity.properties.clientId }
             { name: 'AZURE_OPENAI_ENDPOINT', value: modelEndpoint }
             { name: 'AZURE_OPENAI_DEPLOYMENT', value: deploymentName }
             { name: 'WORKSHOP_ACCESS_CODE_HASH', value: workshopAccessCodeHash }
+            { name: 'DEPLOYMENT_ENVIRONMENT', value: 'workshop' }
           ]
           probes: [
             {
