@@ -39,6 +39,8 @@ resource model 'Microsoft.CognitiveServices/accounts/deployments@2025-06-01' = {
     model: { format: 'OpenAI', name: modelName, version: modelVersion }
     versionUpgradeOption: 'NoAutoUpgrade'
   }
+  // Foundry account child operations must not race during initial provisioning.
+  dependsOn: [project]
 }
 
 output accountName string = account.name
