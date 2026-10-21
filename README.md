@@ -11,4 +11,40 @@ Four prepared checkpoints tell the story:
 
 Twelve products. No database, checkout, accounts, or microservices.
 
-Implementation is tracked through phase issues and pull requests. Each completed phase receives an immutable `stage-N` tag.
+## Run this checkpoint
+
+Install JDK 25. The Maven wrapper downloads Maven on the first run.
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+On macOS/Linux: `./mvnw spring-boot:run`. Open <http://localhost:8080>.
+If Maven reports an invalid `JAVA_HOME`, point it at your JDK 25 installation.
+
+## Verify
+
+```powershell
+.\mvnw.cmd -B -ntp verify
+```
+
+The tests use the bundled inventory and do not call Azure.
+
+## What to show
+
+Open the catalog, filter for **Jackets** and **In stock only**, and find the same
+products in [inventory.json](src/main/resources/inventory.json).
+The [catalog service](src/main/java/com/contoso/store/catalog/CatalogService.java)
+is the single source of product facts for the page and JSON API.
+
+- `GET /api/products?category=Jackets&inStock=true`
+- `GET /api/products/JKT-003`
+
+Prices are USD. Inventory is read-only and packaged with the application.
+There is intentionally no checkout or persistent stock management.
+
+## Prepared phases
+
+Implementation is tracked in the [roadmap](https://github.com/roryp/spring-ai-webstore/issues/1).
+Each completed phase receives an immutable `stage-N` tag.
+Phase 1 has no container, cloud configuration, health probes, or AI integration.

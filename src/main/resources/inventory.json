@@ -1,0 +1,14 @@
+[
+  {"sku":"JKT-001","name":"Trail Rain Jacket","description":"A lightweight waterproof jacket for rainy day hikes. Packs into its own pocket.","category":"Jackets","price":99.00,"stock":12,"icon":"jacket"},
+  {"sku":"JKT-002","name":"Storm Shell","description":"A breathable waterproof jacket with sealed seams and an adjustable hood.","category":"Jackets","price":139.00,"stock":4,"icon":"jacket"},
+  {"sku":"JKT-003","name":"Summit Waterproof Jacket","description":"A durable waterproof jacket for exposed ridgelines and long wet days.","category":"Jackets","price":149.00,"stock":0,"icon":"jacket"},
+  {"sku":"FWT-001","name":"Ridge Hiking Boots","description":"Waterproof hiking boots with ankle support and a grippy trail sole.","category":"Footwear","price":129.00,"stock":8,"icon":"boot"},
+  {"sku":"FWT-002","name":"Merino Hiking Socks","description":"Soft, quick-drying hiking socks with a cushioned heel and toe.","category":"Footwear","price":19.00,"stock":30,"icon":"boot"},
+  {"sku":"PCK-001","name":"Everyday Trail Pack","description":"A comfortable 22-liter day pack with space for a jacket and lunch.","category":"Packs","price":59.00,"stock":10,"icon":"pack"},
+  {"sku":"PCK-002","name":"Pack Rain Cover","description":"A waterproof cover that keeps a 20-30 liter backpack dry in the rain.","category":"Packs","price":15.00,"stock":18,"icon":"pack"},
+  {"sku":"CMP-001","name":"Two-Person Trail Tent","description":"A compact three-season tent with a waterproof fly and room for two.","category":"Camp","price":189.00,"stock":5,"icon":"tent"},
+  {"sku":"CMP-002","name":"Weekend Sleeping Bag","description":"A packable sleeping bag for cool-weather camping and weekend trips.","category":"Camp","price":89.00,"stock":3,"icon":"tent"},
+  {"sku":"GEA-001","name":"Folding Trekking Poles","description":"Adjustable trekking poles that add stability on wet and uneven trails.","category":"Gear","price":39.00,"stock":16,"icon":"gear"},
+  {"sku":"GEA-002","name":"Trail Headlamp","description":"A weather-resistant headlamp for early starts and the walk back to camp.","category":"Gear","price":29.00,"stock":7,"icon":"gear"},
+  {"sku":"GEA-003","name":"Insulated Water Bottle","description":"A reusable 750 ml water bottle that keeps drinks cool on the trail.","category":"Gear","price":25.00,"stock":22,"icon":"gear"}
+]
