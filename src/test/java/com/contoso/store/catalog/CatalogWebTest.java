@@ -54,6 +54,15 @@ class CatalogWebTest {
     }
 
     @Test
+    void healthProbesExposeStatusButNotDetails() throws Exception {
+        mvc.perform(get("/actuator/health/liveness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"))
+                .andExpect(jsonPath("$.components").doesNotExist());
+        mvc.perform(get("/actuator/env")).andExpect(status().isNotFound());
+    }
+
+    @Test
     void invalidFiltersReturn400() throws Exception {
         mvc.perform(get("/api/products").param("maxPrice", "-1")).andExpect(status().isBadRequest());
         mvc.perform(get("/api/products").param("q", "x".repeat(101))).andExpect(status().isBadRequest());

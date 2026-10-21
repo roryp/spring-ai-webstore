@@ -1,0 +1,68 @@
+name: Deploy current phase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workshop-deployment
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - run: ./mvnw -B -ntp verify
+      - run: az bicep build --file infra/main.bicep --stdout > /dev/null
+
+  deploy:
+    needs: verify
+    if: vars.AZURE_DEPLOY_CLIENT_ID != ''
+    environment: workshop
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_DEPLOY_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      AZURE_CONTAINER_REGISTRY_ENDPOINT: ${{ vars.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
+      SERVICE_WEB_RESOURCE_NAME: ca-trail-stage-2
+      AZURE_ENV_NAME: trail-stage-2
+      STORE_PHASE: '2'
+      BUILD_REVISION: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - uses: Azure/setup-azd@v2
+      - name: Sign in without a client secret
+        run: azd auth login --client-id "$AZURE_CLIENT_ID" --tenant-id "$AZURE_TENANT_ID" --federated-credential-provider github
+      - name: Select environment
+        run: azd env new "$AZURE_ENV_NAME" --subscription "$AZURE_SUBSCRIPTION_ID" --location "$AZURE_LOCATION" --no-prompt
+      - name: Deploy the verified application
+        run: azd deploy --no-prompt
+      - name: Verify the running catalog
+        run: |
+          url=$(azd env get-value SERVICE_WEB_URI)
+          curl --fail --retry 8 --retry-delay 10 --retry-all-errors "$url/actuator/health/readiness"
+          curl --fail --retry 3 "$url/api/products/JKT-003"
+          printf '### Phase 2\n[%s](%s)\n' "$url" "$url" >> "$GITHUB_STEP_SUMMARY"
