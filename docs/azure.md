@@ -34,15 +34,19 @@ PR CI has no Azure permissions. Deployment runs only on `main` or a manual
 dispatch, using the protected `workshop` environment.
 
 Before enabling it:
-1. Create a dedicated deployment identity scoped to the demo resources.
+1. Create a dedicated deployment identity with Contributor on the dedicated demo
+   resource group only. It does not get subscription access or role-assignment permissions.
 2. Configure GitHub OIDC trust for this repository's `workshop` environment.
 3. Restrict that GitHub environment to `main`.
 4. Set repository variables `AZURE_DEPLOY_CLIENT_ID`, `AZURE_TENANT_ID`,
-   `AZURE_SUBSCRIPTION_ID`, `AZURE_LOCATION`, and `AZURE_RESOURCE_GROUP`.
+   `AZURE_SUBSCRIPTION_ID`, `AZURE_LOCATION`, `AZURE_RESOURCE_GROUP`, and
+   `AZURE_CONTAINER_REGISTRY_ENDPOINT`.
 5. Confirm the actual OIDC subject matches the repository's current subject format.
 
-Bootstrap provisioning and role assignments are performed by an authorized
-operator. Do not grant untrusted PR workflows provisioning privileges.
+Infrastructure changes, bootstrap provisioning, and role assignments are performed
+by an authorized operator with `azd up` before merging the relevant phase.
+The workflow deploys application code only; it does not provision subscription-level
+infrastructure. Do not grant untrusted PR workflows provisioning privileges.
 Never create a deployment client secret.
 
 ## Warm before presenting

@@ -1,7 +1,8 @@
 FROM eclipse-temurin:25-jdk-noble AS build
 WORKDIR /workspace
 COPY .mvn .mvn
-COPY --chmod=0755 mvnw mvnw
+COPY mvnw mvnw
+RUN chmod +x mvnw
 COPY pom.xml pom.xml
 RUN ./mvnw -B -ntp dependency:go-offline
 COPY src src
