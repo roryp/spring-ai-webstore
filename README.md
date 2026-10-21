@@ -52,3 +52,8 @@ This checkpoint adds Azure deployment without changing the catalog.
 
 See [Azure preparation](docs/azure.md) for `azd up`, protected GitHub deployment,
 warming the app before the event, pricing, and cleanup.
+
+Phase 3 adds **Ask Trail**, powered by Spring AI and Microsoft Foundry.
+The default local run remains offline and credential-free. See
+[inventory chat preparation](docs/assistant.md) for the live profile, workshop
+access, limits, and the three rehearsed questions.
