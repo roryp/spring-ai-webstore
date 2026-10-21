@@ -26,10 +26,11 @@ class ModelRoutingTest {
     private static final AtomicReference<String> body = new AtomicReference<>();
     private static final HttpServer server = startServer();
     @Autowired ChatModel model;
+    @Autowired AssistantService assistant;
 
     @DynamicPropertySource
     static void settings(DynamicPropertyRegistry properties) {
-        properties.add("spring.ai.openai.base-url", () -> "http://127.0.0.1:" + server.getAddress().getPort());
+        properties.add("spring.ai.openai.base-url", () -> "http://127.0.0.1:" + server.getAddress().getPort() + "/openai/v1");
         properties.add("spring.ai.openai.microsoft-deployment-name", () -> "inventory-demo");
         properties.add("spring.ai.openai.chat.model", () -> "inventory-demo");
         properties.add("store.assistant.access-code-hash",
@@ -40,8 +41,17 @@ class ModelRoutingTest {
     void sendsTheDeploymentNameOnTheWireWithoutAzureCredentials() {
         var response = model.call(new Prompt("hello"));
         assertThat(response.getResult().getOutput().getText()).isEqualTo("Test answer");
-        assertThat(path.get()).contains("/deployments/inventory-demo/");
+        assertThat(path.get()).isEqualTo("/openai/v1/chat/completions");
         assertThat(body.get()).contains("\"model\":\"inventory-demo\"");
+    }
+
+    @Test
+    void chatClientPreservesTheConfiguredDeploymentAndOptionsWithTools() {
+        assertThat(assistant.answer("Find a jacket")).isEqualTo("Test answer");
+        assertThat(path.get()).isEqualTo("/openai/v1/chat/completions");
+        assertThat(body.get()).contains("\"model\":\"inventory-demo\"")
+                .contains("\"reasoning_effort\":\"none\"")
+                .contains("\"max_completion_tokens\":600");
     }
 
     static HttpServer startServer() {

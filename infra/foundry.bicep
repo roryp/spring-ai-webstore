@@ -46,6 +46,6 @@ resource model 'Microsoft.CognitiveServices/accounts/deployments@2025-06-01' = {
 output accountName string = account.name
 output accountId string = account.id
 output projectId string = project.id
-output modelEndpoint string = account.properties.endpoints['OpenAI Language Model Instance API']
+output modelEndpoint string = uri(account.properties.endpoints['OpenAI Language Model Instance API'], '/openai/v1')
 output projectEndpoint string = 'https://${account.name}.services.ai.azure.com/api/projects/${project.name}'
 output deploymentName string = model.name

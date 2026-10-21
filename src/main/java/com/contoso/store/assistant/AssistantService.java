@@ -1,5 +1,6 @@
 package com.contoso.store.assistant;
 
+import com.openai.errors.OpenAIServiceException;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import jakarta.annotation.PreDestroy;
@@ -75,7 +76,13 @@ public class AssistantService {
             if (exception.getCause() instanceof AssistantException failure) {
                 throw failure;
             }
-            log.warn("Assistant provider failed; exceptionType={}", exception.getCause().getClass().getSimpleName());
+            if (exception.getCause() instanceof OpenAIServiceException provider) {
+                log.warn("Assistant provider failed; httpStatus={}, code={}, parameter={}",
+                        provider.statusCode(), provider.code().orElse("unknown"), provider.param().orElse("unspecified"));
+            }
+            else {
+                log.warn("Assistant provider failed; exceptionType={}", exception.getCause().getClass().getSimpleName());
+            }
             throw new AssistantException(HttpStatus.SERVICE_UNAVAILABLE, "provider_unavailable",
                     "The AI provider is unavailable or throttled. Please retry; the catalog still works.");
         }

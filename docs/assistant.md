@@ -62,6 +62,10 @@ identity does not receive model inference access. There are no model API keys.
 The Global Standard model deployment has a configurable capacity of 100, subject
 to subscription quota. This is a throughput allocation, not a purchased PTU.
 The runtime sends the deployment name `chat`, not the underlying model name.
+The endpoint uses `/openai/v1`. For this deployed model, function tools on Chat
+Completions require `reasoning_effort=none`; the live API rejects `low` with tools.
+This is an inventory lookup, so we use the supported, low-latency setting rather
+than introducing a second API or agent framework.
 
 ## Limits and failure behavior
 
