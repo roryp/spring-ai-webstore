@@ -1,7 +1,6 @@
 param environmentName string
 param location string
 param phase int
-param revision string
 param environmentId string
 param registryName string
 param image string
@@ -61,7 +60,6 @@ resource app 'Microsoft.App/containerApps@2025-01-01' = {
           env: [
             { name: 'SPRING_PROFILES_ACTIVE', value: 'azure' }
             { name: 'STORE_PHASE', value: string(phase) }
-            { name: 'BUILD_REVISION', value: revision }
             { name: 'AZURE_CLIENT_ID', value: identity.properties.clientId }
           ]
           probes: [

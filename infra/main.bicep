@@ -7,7 +7,6 @@ param location string
 param resourceGroupName string = 'rg-${environmentName}'
 @allowed([2, 3, 4])
 param phase int = 2
-param revision string = 'local'
 param webAppExists bool = false
 @minValue(0)
 @maxValue(1)
@@ -37,7 +36,6 @@ module web './web.bicep' = {
     environmentName: environmentName
     location: location
     phase: phase
-    revision: revision
     environmentId: host.outputs.environmentId
     registryName: host.outputs.registryName
     image: webAppExists ? previousApp!.properties.template.containers[0].image : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'

@@ -13,3 +13,5 @@ services:
       path: ./Dockerfile
       context: .
       remoteBuild: true
+      buildArgs:
+        - BUILD_REVISION=${BUILD_REVISION}

@@ -10,6 +10,8 @@ RUN ./mvnw -B -ntp -DskipTests package
 
 FROM eclipse-temurin:25-jre-noble
 WORKDIR /app
+ARG BUILD_REVISION=local
+ENV BUILD_REVISION=${BUILD_REVISION}
 COPY --from=build /workspace/target/trail-store-1.0.0.jar application.jar
 USER 10001:10001
 ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=70 -XX:+ExitOnOutOfMemoryError"

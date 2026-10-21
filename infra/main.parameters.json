@@ -6,7 +6,6 @@
     "location": { "value": "${AZURE_LOCATION}" },
     "resourceGroupName": { "value": "${AZURE_RESOURCE_GROUP=rg-trail-store}" },
     "phase": { "value": "${STORE_PHASE=2}" },
-    "revision": { "value": "${BUILD_REVISION=local}" },
     "webAppExists": { "value": "${SERVICE_WEB_RESOURCE_EXISTS=false}" },
     "minReplicas": { "value": "${MIN_REPLICAS=0}" }
   }
