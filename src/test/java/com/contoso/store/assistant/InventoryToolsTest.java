@@ -24,6 +24,8 @@ class InventoryToolsTest {
         assertThat(jackets.getFirst().price()).isEqualByComparingTo("99.00");
         assertThat(jackets.getFirst().currency()).isEqualTo("USD");
         assertThat(tools.getProduct("JKT-003").product().stock()).isZero();
+        assertThat(tools.getProduct("JKT-003").alternatives()).extracting(InventoryTools.ProductFact::sku)
+                .containsExactly("JKT-001", "JKT-002");
     }
 
     @Test

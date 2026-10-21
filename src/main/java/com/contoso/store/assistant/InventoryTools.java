@@ -30,11 +30,15 @@ public class InventoryTools {
                 .limit(5).map(ProductFact::from).toList();
     }
 
-    @Tool(description = "Look up a product's current price and stock by SKU. found=false means the SKU is not in this store.")
+    @Tool(description = "Look up current price and stock by SKU. An out-of-stock product includes up to three in-stock alternatives from its category. found=false means an unknown SKU.")
     public ProductLookup getProduct(@ToolParam(description = "SKU, such as JKT-003") String sku) {
         Assert.isTrue(sku != null && sku.length() <= 40, "SKU must be at most 40 characters");
-        return catalog.find(sku).map(product -> new ProductLookup(sku, true, ProductFact.from(product)))
-                .orElseGet(() -> new ProductLookup(sku, false, null));
+        return catalog.find(sku).map(product -> {
+            List<ProductFact> alternatives = product.inStock() ? List.of()
+                    : catalog.search("", product.category(), null, true).stream()
+                            .limit(3).map(ProductFact::from).toList();
+            return new ProductLookup(sku, true, ProductFact.from(product), alternatives);
+        }).orElseGet(() -> new ProductLookup(sku, false, null, List.of()));
     }
 
     public record ProductFact(String sku, String name, String category, BigDecimal price,
@@ -45,5 +49,5 @@ public class InventoryTools {
         }
     }
 
-    public record ProductLookup(String sku, boolean found, ProductFact product) { }
+    public record ProductLookup(String sku, boolean found, ProductFact product, List<ProductFact> alternatives) { }
 }
