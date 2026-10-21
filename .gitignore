@@ -1,0 +1,14 @@
+target/
+.azure/
+.env
+.env.*
+!.env.example
+*.log
+data/
+.idea/
+*.iml
+.vscode/
+.DS_Store
+playwright-report/
+test-results/
+node_modules/
