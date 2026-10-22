@@ -70,6 +70,22 @@ Here's what the query returned for our test questions on 22 October 2026. We add
 
 To see one question as a timeline, go to **Investigate** > **Search**, and select an `http post /ask` request. This opens its transaction diagnostics.
 
+## What the traces taught us
+
+While testing, the first question after a start took 20 seconds, but later ones took about 3. Its trace showed why: the app spent 13 seconds getting ready before it called the model, signing in to Foundry and loading its AI library. That work needs CPU, so we measured three sizes:
+
+| App size | Setup before the first model call | First question |
+|---|---|---|
+| 0.5 vCPU, 1 GiB | 13.2 s | 20.0 s |
+| 1 vCPU, 2 GiB | 6.7 s | 11.3 s |
+| 2 vCPU, 4 GiB | 4.9 s | 8.8 s |
+
+Steps 3 and 4 now use 1 vCPU. Later questions take about 3 seconds at every size, because that's the model's own speed.
+
+The traces can't explain the 30-second wait for the first page after a quiet spell, because most of it happens before the app runs: Azure pulls the 210 MB image and starts the container. More CPU doesn't shorten it; keeping one replica running removes it.
+
+To see the setup yourself, ask a question right after the app starts, and open it in **Search**. The first `chat gpt-6-luna` span starts long before its `POST` span.
+
 ## Deploy it
 
 You need the same tools as in [step 2](../step-2-azure/README.md#deploy-it).

@@ -96,6 +96,7 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "A question about the products is two model calls and one tool call. Here are the tokens, and here's the cost: less than a hundredth of a cent."
   - "The traces show timings and token counts, but not what people asked."
   - "Seeing what your app does, and what it costs, is a big step toward running it in production."
+- **Optional:** "Traces also showed us why the first answer was slow: 13 seconds of setup before the model was even called. With 1 vCPU instead of half, it's under 7." See [What the traces taught us](../step-4-observe/README.md#what-the-traces-taught-us).
 
 ![How traces get to Application Insights](diagrams/step-4-pipeline.png)
 
