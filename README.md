@@ -68,7 +68,7 @@ These are Azure retail prices in US dollars for Sweden Central, checked on 22 Oc
 | Service | Price | In this demo |
 |---|---|---|
 | Container Registry, Basic | $0.1666 a day | About $5 a month for each step you deploy. This is the main fixed cost. |
-| Container Apps, Consumption | $0.000024 per vCPU-second and $0.000003 per GiB-second while running | The app scales to zero when it's idle. A busy hour costs about $0.05. |
+| Container Apps, Consumption | $0.000024 per vCPU-second and $0.000003 per GiB-second while running | The apps scale to zero when they're idle. A busy hour costs about $0.05 for step 2 (0.5 vCPU, 1 GiB) and about $0.11 for steps 3 and 4 (1 vCPU, 2 GiB). |
 | GPT-6 Luna, Global Standard | $0.10 per 1M input tokens and $0.50 per 1M output tokens | One question uses about 540 input and 50 output tokens, so it costs about $0.00008. That's about 8 cents for 1,000 questions. |
 | Log Analytics (step 4 only) | The first 5 GB a month are free, then $2.99 per GB | A demo sends a few megabytes. |
 

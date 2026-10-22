@@ -108,7 +108,8 @@ resource app 'Microsoft.App/containerApps@2025-01-01' = {
           name: 'web'
           // azd replaces this placeholder with our image when it deploys.
           image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
-          resources: { cpu: json('0.5'), memory: '1Gi' }
+          // Loading the AI library takes CPU: with 1 vCPU, the first answer comes about twice as fast as with 0.5.
+          resources: { cpu: json('1.0'), memory: '2Gi' }
           // Tell the app where the model is, and which identity to sign in with.
           env: [
             { name: 'AZURE_OPENAI_ENDPOINT', value: foundry.properties.endpoints['OpenAI Language Model Instance API'] }

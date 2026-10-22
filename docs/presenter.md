@@ -28,7 +28,7 @@ The day before:
 
 30 minutes before:
 
-- [ ] Keep one copy of each Azure app running, so nobody waits for an app to wake up. Otherwise, the first visit after a quiet spell can take up to a minute.
+- [ ] Keep one copy of each Azure app running, so nobody waits for an app to wake up. Otherwise, the first visit after a quiet spell takes about 30 seconds.
 
   ```powershell
   az containerapp update -g rg-trail-step2 -n ca-4scup3zlsthac --min-replicas 1
@@ -37,7 +37,7 @@ The day before:
   ```
 
 - [ ] In `step-1-local`, run `.\mvnw.cmd spring-boot:run` and leave the terminal open.
-- [ ] Open the four app links. In steps 3 and 4, select **Summit jacket in stock?** once. The first answer after a restart takes up to 20 seconds; after that, answers take 3 to 4 seconds. Your step 4 warm-up question also gives the saved query something to show.
+- [ ] Open the four app links. In steps 3 and 4, select **Summit jacket in stock?** once. The first answer after a restart takes about 12 seconds; after that, answers take about 3 seconds. Your step 4 warm-up question also gives the saved query something to show.
 - [ ] Open these tabs: this repo on GitHub, the four apps, Application Insights **Logs**, and the transaction diagnostics of your warm-up question.
 
 After the event, run the same three commands with `--min-replicas 0`, or delete everything as described in [Clean up](../README.md#clean-up).
