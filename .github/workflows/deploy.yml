@@ -3,6 +3,10 @@ name: Deploy current phase
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'LICENSE'
   workflow_dispatch:
 
 permissions:
@@ -42,9 +46,9 @@ jobs:
       AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
       AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
       AZURE_CONTAINER_REGISTRY_ENDPOINT: ${{ vars.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
-      SERVICE_WEB_RESOURCE_NAME: ca-trail-stage-3
-      AZURE_ENV_NAME: trail-stage-3
-      STORE_PHASE: '3'
+      SERVICE_WEB_RESOURCE_NAME: ca-trail-stage-4
+      AZURE_ENV_NAME: trail-stage-4
+      STORE_PHASE: '4'
       BUILD_REVISION: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v5
@@ -73,4 +77,4 @@ jobs:
           curl --fail --retry 8 --retry-delay 10 --retry-all-errors "$url/actuator/health/readiness"
           curl --fail --retry 3 "$url/api/products/JKT-003" | jq -e '.sku == "JKT-003" and .stock == 0'
           curl --fail "$url/api/assistant/status" | jq -e '.enabled == true'
-          printf '### Phase 3\n[%s](%s)\n' "$url" "$url" >> "$GITHUB_STEP_SUMMARY"
+          printf '### Phase 4\n[%s](%s)\n' "$url" "$url" >> "$GITHUB_STEP_SUMMARY"

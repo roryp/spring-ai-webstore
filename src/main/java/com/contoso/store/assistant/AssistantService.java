@@ -1,6 +1,7 @@
 package com.contoso.store.assistant;
 
 import com.openai.errors.OpenAIServiceException;
+import com.contoso.store.observability.AssistantObservations;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import jakarta.annotation.PreDestroy;
@@ -44,6 +45,13 @@ public class AssistantService {
     }
 
     public String answer(String question) {
+        return Observation.createNotStarted("invoke_agent", observations)
+                .contextualName("invoke_agent " + AssistantObservations.AGENT_ID)
+                .lowCardinalityKeyValue("gen_ai.operation.name", "invoke_agent")
+                .observe(() -> answerWithDeadline(question));
+    }
+
+    private String answerWithDeadline(String question) {
         Observation parent = observations.getCurrentObservation();
         Future<String> request;
         try {

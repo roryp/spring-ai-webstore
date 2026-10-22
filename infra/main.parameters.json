@@ -5,7 +5,7 @@
     "environmentName": { "value": "${AZURE_ENV_NAME}" },
     "location": { "value": "${AZURE_LOCATION}" },
     "resourceGroupName": { "value": "${AZURE_RESOURCE_GROUP=rg-trail-store}" },
-    "phase": { "value": "${STORE_PHASE=3}" },
+    "phase": { "value": "${STORE_PHASE=4}" },
     "webAppExists": { "value": "${SERVICE_WEB_RESOURCE_EXISTS=false}" },
     "minReplicas": { "value": "${MIN_REPLICAS=0}" },
     "aiLocation": { "value": "${AZURE_AI_LOCATION=swedencentral}" },

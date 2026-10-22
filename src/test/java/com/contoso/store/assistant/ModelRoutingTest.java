@@ -1,11 +1,6 @@
 package com.contoso.store.assistant;
 
-import com.sun.net.httpserver.HttpServer;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.HexFormat;
-import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.model.ChatModel;
@@ -22,15 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class ModelRoutingTest {
 
-    private static final AtomicReference<String> path = new AtomicReference<>();
-    private static final AtomicReference<String> body = new AtomicReference<>();
-    private static final HttpServer server = startServer();
+    private static final TestModelEndpoint server = new TestModelEndpoint(false);
     @Autowired ChatModel model;
     @Autowired AssistantService assistant;
 
     @DynamicPropertySource
     static void settings(DynamicPropertyRegistry properties) {
-        properties.add("spring.ai.openai.base-url", () -> "http://127.0.0.1:" + server.getAddress().getPort() + "/openai/v1");
+        properties.add("spring.ai.openai.base-url", server::url);
         properties.add("spring.ai.openai.microsoft-deployment-name", () -> "inventory-demo");
         properties.add("spring.ai.openai.chat.model", () -> "inventory-demo");
         properties.add("store.assistant.access-code-hash",
@@ -41,46 +34,21 @@ class ModelRoutingTest {
     void sendsTheDeploymentNameOnTheWireWithoutAzureCredentials() {
         var response = model.call(new Prompt("hello"));
         assertThat(response.getResult().getOutput().getText()).isEqualTo("Test answer");
-        assertThat(path.get()).isEqualTo("/openai/v1/chat/completions");
-        assertThat(body.get()).contains("\"model\":\"inventory-demo\"");
+        assertThat(server.path.get()).isEqualTo("/openai/v1/chat/completions");
+        assertThat(server.body.get()).contains("\"model\":\"inventory-demo\"");
     }
 
     @Test
     void chatClientPreservesTheConfiguredDeploymentAndOptionsWithTools() {
         assertThat(assistant.answer("Find a jacket")).isEqualTo("Test answer");
-        assertThat(path.get()).isEqualTo("/openai/v1/chat/completions");
-        assertThat(body.get()).contains("\"model\":\"inventory-demo\"")
+        assertThat(server.path.get()).isEqualTo("/openai/v1/chat/completions");
+        assertThat(server.body.get()).contains("\"model\":\"inventory-demo\"")
                 .contains("\"reasoning_effort\":\"none\"")
                 .contains("\"max_completion_tokens\":600");
     }
 
-    static HttpServer startServer() {
-        try {
-            HttpServer stub = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
-            stub.createContext("/", exchange -> {
-                path.set(exchange.getRequestURI().getPath());
-                body.set(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
-                byte[] response = """
-                        {"id":"test","object":"chat.completion","created":1,"model":"underlying-test-model",
-                         "choices":[{"index":0,"message":{"role":"assistant","content":"Test answer"},"finish_reason":"stop"}],
-                         "usage":{"prompt_tokens":10,"completion_tokens":3,"total_tokens":13}}
-                        """.getBytes(StandardCharsets.UTF_8);
-                exchange.getResponseHeaders().set("Content-Type", "application/json");
-                exchange.sendResponseHeaders(200, response.length);
-                try (var output = exchange.getResponseBody()) {
-                    output.write(response);
-                }
-            });
-            stub.start();
-            return stub;
-        }
-        catch (IOException exception) {
-            throw new IllegalStateException("Cannot start the local model test endpoint", exception);
-        }
-    }
-
     @AfterAll
     static void stopServer() {
-        server.stop(0);
+        server.close();
     }
 }

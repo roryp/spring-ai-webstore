@@ -1,0 +1,21 @@
+// Fill in VERIFIED prices for the model/version, region, currency, and date.
+// Null means "not priced", not zero cost. This is a trace-derived estimate, not a bill.
+let InputUsdPerMillion = real(null);
+let CachedInputUsdPerMillion = real(null);
+let OutputUsdPerMillion = real(null);
+dependencies
+| where timestamp > ago(24h)
+| where cloud_RoleName == "trail-store-phase-4" or cloud_RoleName endswith ".trail-store-phase-4"
+| where tostring(customDimensions["gen_ai.agent.id"]) == "trail-store-assistant"
+| where tostring(customDimensions["gen_ai.operation.name"]) == "chat"
+| extend InputTokens = tolong(customDimensions["gen_ai.usage.input_tokens"]),
+         OutputTokens = tolong(customDimensions["gen_ai.usage.output_tokens"]),
+         CachedInputTokens = coalesce(tolong(customDimensions["gen_ai.usage.cache_read.input_tokens"]), tolong(0))
+| extend UsageValid = isnotnull(InputTokens) and isnotnull(OutputTokens)
+                    and CachedInputTokens >= 0 and CachedInputTokens <= InputTokens
+| extend EstimatedUsd = iff(UsageValid,
+    ((InputTokens - CachedInputTokens) * InputUsdPerMillion
+      + CachedInputTokens * CachedInputUsdPerMillion
+      + OutputTokens * OutputUsdPerMillion) / 1000000.0, real(null))
+| project timestamp, TraceId = operation_Id, InputTokens, CachedInputTokens, OutputTokens, UsageValid, EstimatedUsd
+| order by timestamp desc

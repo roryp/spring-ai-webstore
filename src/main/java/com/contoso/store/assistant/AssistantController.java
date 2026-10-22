@@ -1,5 +1,6 @@
 package com.contoso.store.assistant;
 
+import io.micrometer.tracing.Tracer;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -22,11 +23,14 @@ public class AssistantController {
     private final ObjectProvider<AssistantService> service;
     private final WorkshopAccess access;
     private final RequestBudget budget;
+    private final ObjectProvider<Tracer> tracer;
 
-    public AssistantController(ObjectProvider<AssistantService> service, WorkshopAccess access, RequestBudget budget) {
+    public AssistantController(ObjectProvider<AssistantService> service, WorkshopAccess access, RequestBudget budget,
+                               ObjectProvider<Tracer> tracer) {
         this.service = service;
         this.access = access;
         this.budget = budget;
+        this.tracer = tracer;
     }
 
     @GetMapping("/api/assistant/status")
@@ -44,7 +48,10 @@ public class AssistantController {
         }
         access.check(code);
         budget.reserve();
-        return new Reply(assistant.answer(question.message().strip()), UUID.randomUUID().toString());
+        String answer = assistant.answer(question.message().strip());
+        var currentTracer = tracer.getIfAvailable();
+        var span = currentTracer == null ? null : currentTracer.currentSpan();
+        return new Reply(answer, UUID.randomUUID().toString(), span == null ? null : span.context().traceId());
     }
 
     @ExceptionHandler(AssistantException.class)
@@ -61,6 +68,6 @@ public class AssistantController {
     }
 
     public record Question(@NotBlank @Size(max = 600) String message) { }
-    public record Reply(String reply, String requestId) { }
+    public record Reply(String reply, String requestId, String traceId) { }
     public record Status(boolean enabled) { }
 }

@@ -78,7 +78,7 @@
                 throw new Error("The assistant returned an invalid response. Please retry.");
             }
             answer.textContent = payload.reply;
-            request.textContent = `Request ${payload.requestId}`;
+            request.textContent = payload.traceId ? `Trace ${payload.traceId}` : `Request ${payload.requestId}`;
             status.textContent = "Answer received. Each new question starts fresh.";
             try {
                 sessionStorage.setItem(storageKey, code.value.trim());

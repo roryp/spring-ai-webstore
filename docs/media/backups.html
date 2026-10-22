@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trail Store | Recorded checkpoints</title>
+<link rel="icon" href="data:,">
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font: 16px/1.6 "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+main { max-width: 1120px; margin: auto; padding: 48px 24px; }
+a { color: var(--cp-link); }
+.eyebrow { color: var(--cp-accent); letter-spacing: 2px; font-size: 12px; font-weight: 700; }
+h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -2px; margin: 16px 0; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+p { color: var(--cp-text-muted); }
+.notice { border-left: 3px solid var(--cp-accent); background: var(--cp-accent-soft); padding: 16px 24px; border-radius: 0 .625rem .625rem 0; margin: 24px 0 32px; }
+.notice strong { color: var(--cp-text); }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+article { border: 1px solid var(--cp-border); border-radius: 16px; overflow: hidden; background: var(--cp-surface); }
+.card-head { padding: 24px; }
+.card-head p { margin: 0; font-size: 14px; }
+video { width: 100%; display: block; aspect-ratio: 16/10; background: var(--cp-surface-soft); }
+.links { padding: 16px 24px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; }
+.evidence { margin-top: 40px; padding: 24px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; border-bottom: 1px solid var(--cp-border); padding: 12px 8px; }
+th { color: var(--cp-text-muted); font-size: 12px; }
+code { font: 12px Consolas, "Courier New", Courier, monospace; overflow-wrap: anywhere; }
+.small { font-size: 12px; }
+:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 4px; }
+@media(max-width: 700px) { .grid { grid-template-columns: 1fr; } main { padding: 32px 16px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">TRAIL STORE / PRESENTER BACKUPS</div>
+  <h1>Four prepared checkpoints.</h1>
+  <p>Actual browser recordings and verified results, captured on 21 October 2026.</p>
+  <div class="notice"><strong>These are recordings, not live requests.</strong><br>Say so when using them. The files are local: no Azure, GitHub, or model connection is needed to play them.</div>
+  <div class="grid">
+    <article>
+      <div class="card-head"><h2>01 / Local</h2><p>"It works on my laptop."</p></div>
+      <video controls preload="none" poster="stage-1.png" aria-label="Recorded phase-one local catalog"><source src="stage-1.webm" type="video/webm"></video>
+      <div class="links"><a href="stage-1.png">Open screenshot</a><a href="stage-1.webm">Open recording</a></div>
+    </article>
+    <article>
+      <div class="card-head"><h2>02 / Azure</h2><p>"Same business code. Repeatable deployment."</p></div>
+      <video controls preload="none" poster="stage-2.png" aria-label="Recorded phase-two Azure catalog"><source src="stage-2.webm" type="video/webm"></video>
+      <div class="links"><a href="stage-2.png">Open screenshot</a><a href="stage-2.webm">Open recording</a></div>
+    </article>
+    <article>
+      <div class="card-head"><h2>03 / AI</h2><p>"The model asks our application for product facts."</p></div>
+      <video controls preload="none" poster="stage-3.png" aria-label="Recorded phase-three inventory question"><source src="stage-3.webm" type="video/webm"></video>
+      <div class="links"><a href="stage-3.png">Open screenshot</a><a href="stage-3.webm">Open recording</a><a href="stage-3-answers.json">Real answer capture</a></div>
+    </article>
+    <article>
+      <div class="card-head"><h2>04 / Observe</h2><p>"Now I can see the request, tools, and tokens."</p></div>
+      <video controls preload="none" poster="stage-4.png" aria-label="Recorded phase-four question and trace ID"><source src="stage-4.webm" type="video/webm"></video>
+      <div class="links"><a href="stage-4.png">Open screenshot</a><a href="stage-4.webm">Open recording</a><a href="stage-4-answers.json">Real answer capture</a></div>
+    </article>
+  </div>
+  <section class="evidence" aria-labelledby="tokens">
+    <div class="eyebrow">VERIFIED APPLICATION INSIGHTS RESULTS</div>
+    <h2 id="tokens">One question can mean two model calls.</h2>
+    <p>These are the actual totals for three synthetic rehearsal requests, not the fixed values used in automated tests.</p>
+    <table>
+      <thead><tr><th>Question</th><th>Model calls</th><th>Input tokens</th><th>Output tokens</th><th>Cached input</th></tr></thead>
+      <tbody>
+        <tr><td>Waterproof jackets under $150</td><td>2</td><td>1,172</td><td>74</td><td>0</td></tr>
+        <tr><td>Alternative to JKT-003</td><td>2</td><td>1,214</td><td>63</td><td>0</td></tr>
+        <tr><td>Two items for a rainy hike</td><td>2</td><td>1,277</td><td>71</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p class="small">No usage fields were missing in these traces. Dollar cost is intentionally not displayed because a current token price was not verified. These are trace-derived usage totals, not an Azure bill.</p>
+    <p class="small"><a href="telemetry.json">Inspect the recorded query results and trace IDs</a></p>
+    <p class="small">The teaching sequence: HTTP request &rarr; assistant &rarr; model &rarr; inventory tool &rarr; model answer. Raw prompts, cookies, and workshop codes are not logged.</p>
+  </section>
+</main>
+</body>
+</html>
