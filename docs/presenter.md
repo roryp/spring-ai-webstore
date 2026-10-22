@@ -2,6 +2,8 @@
 
 Everything is deployed before the event. On stage you only open files and click links. Nothing is built or deployed live.
 
+For the 45-minute workshop, you can also present [the slides](trail-store-workshop.pptx). They follow the [workshop guide](workshop.md), and every slide has speaker notes.
+
 ## Your links
 
 | Step | App | Code |

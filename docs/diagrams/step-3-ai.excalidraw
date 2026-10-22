@@ -8,8 +8,8 @@
    "type": "rectangle",
    "x": 0,
    "y": 0,
-   "width": 1640,
-   "height": 1060,
+   "width": 1760,
+   "height": 960,
    "angle": 0,
    "strokeColor": "transparent",
    "backgroundColor": "transparent",
@@ -72,7 +72,7 @@
    "x": 60,
    "y": 110,
    "width": 240,
-   "height": 100,
+   "height": 90,
    "angle": 0,
    "strokeColor": "#495057",
    "backgroundColor": "#ffffff",
@@ -104,7 +104,7 @@
    "id": "step-3-ai-text-4",
    "type": "text",
    "x": 95.3,
-   "y": 132.5,
+   "y": 127.5,
    "width": 169.4,
    "height": 55.0,
    "angle": 0,
@@ -140,9 +140,9 @@
    "id": "step-3-ai-line-5",
    "type": "line",
    "x": 180.0,
-   "y": 218,
+   "y": 208,
    "width": 0.0,
-   "height": 692,
+   "height": 607,
    "angle": 0,
    "strokeColor": "#495057",
    "backgroundColor": "transparent",
@@ -169,7 +169,7 @@
     ],
     [
      0.0,
-     692
+     607
     ]
    ],
    "lastCommittedPoint": null,
@@ -181,10 +181,10 @@
   {
    "id": "step-3-ai-rectangle-6",
    "type": "rectangle",
-   "x": 440,
+   "x": 450,
    "y": 110,
    "width": 300,
-   "height": 100,
+   "height": 90,
    "angle": 0,
    "strokeColor": "#b11f4b",
    "backgroundColor": "#fde4ec",
@@ -215,8 +215,8 @@
   {
    "id": "step-3-ai-text-7",
    "type": "text",
-   "x": 505.3,
-   "y": 132.5,
+   "x": 515.3,
+   "y": 127.5,
    "width": 169.4,
    "height": 55.0,
    "angle": 0,
@@ -251,10 +251,10 @@
   {
    "id": "step-3-ai-line-8",
    "type": "line",
-   "x": 590.0,
-   "y": 218,
+   "x": 600.0,
+   "y": 208,
    "width": 0.0,
-   "height": 692,
+   "height": 607,
    "angle": 0,
    "strokeColor": "#495057",
    "backgroundColor": "transparent",
@@ -281,7 +281,7 @@
     ],
     [
      0.0,
-     692
+     607
     ]
    ],
    "lastCommittedPoint": null,
@@ -293,10 +293,10 @@
   {
    "id": "step-3-ai-rectangle-9",
    "type": "rectangle",
-   "x": 880,
+   "x": 930,
    "y": 110,
    "width": 300,
-   "height": 100,
+   "height": 90,
    "angle": 0,
    "strokeColor": "#b11f4b",
    "backgroundColor": "#ffffff",
@@ -327,8 +327,8 @@
   {
    "id": "step-3-ai-text-10",
    "type": "text",
-   "x": 927.15,
-   "y": 132.5,
+   "x": 977.15,
+   "y": 127.5,
    "width": 205.70000000000002,
    "height": 55.0,
    "angle": 0,
@@ -363,10 +363,10 @@
   {
    "id": "step-3-ai-line-11",
    "type": "line",
-   "x": 1030.0,
-   "y": 218,
+   "x": 1080.0,
+   "y": 208,
    "width": 0.0,
-   "height": 692,
+   "height": 607,
    "angle": 0,
    "strokeColor": "#495057",
    "backgroundColor": "transparent",
@@ -393,7 +393,7 @@
     ],
     [
      0.0,
-     692
+     607
     ]
    ],
    "lastCommittedPoint": null,
@@ -405,10 +405,10 @@
   {
    "id": "step-3-ai-rectangle-12",
    "type": "rectangle",
-   "x": 1300,
+   "x": 1390,
    "y": 110,
    "width": 300,
-   "height": 100,
+   "height": 90,
    "angle": 0,
    "strokeColor": "#5c2d91",
    "backgroundColor": "#efe3f7",
@@ -439,8 +439,8 @@
   {
    "id": "step-3-ai-text-13",
    "type": "text",
-   "x": 1329.0,
-   "y": 132.5,
+   "x": 1419.0,
+   "y": 127.5,
    "width": 242.00000000000003,
    "height": 55.0,
    "angle": 0,
@@ -475,10 +475,10 @@
   {
    "id": "step-3-ai-line-14",
    "type": "line",
-   "x": 1450.0,
-   "y": 218,
+   "x": 1540.0,
+   "y": 208,
    "width": 0.0,
-   "height": 692,
+   "height": 607,
    "angle": 0,
    "strokeColor": "#495057",
    "backgroundColor": "transparent",
@@ -505,7 +505,7 @@
     ],
     [
      0.0,
-     692
+     607
     ]
    ],
    "lastCommittedPoint": null,
@@ -518,8 +518,8 @@
    "id": "step-3-ai-arrow-15",
    "type": "arrow",
    "x": 186,
-   "y": 280,
-   "width": 398,
+   "y": 265,
+   "width": 408,
    "height": 0,
    "angle": 0,
    "strokeColor": "#495057",
@@ -546,7 +546,7 @@
      0
     ],
     [
-     398,
+     408,
      0
     ]
    ],
@@ -560,10 +560,10 @@
   {
    "id": "step-3-ai-text-16",
    "type": "text",
-   "x": 200,
-   "y": 245,
-   "width": 363.00000000000006,
-   "height": 25.0,
+   "x": 204,
+   "y": 227.5,
+   "width": 314.6,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -583,9 +583,9 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "1  Is the Summit jacket in stock?",
-   "originalText": "1  Is the Summit jacket in stock?",
-   "fontSize": 20,
+   "text": "1  Summit jacket in stock?",
+   "originalText": "1  Summit jacket in stock?",
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -596,9 +596,9 @@
   {
    "id": "step-3-ai-arrow-17",
    "type": "arrow",
-   "x": 596,
-   "y": 360,
-   "width": 848,
+   "x": 606,
+   "y": 335,
+   "width": 928,
    "height": 0,
    "angle": 0,
    "strokeColor": "#5c2d91",
@@ -625,7 +625,7 @@
      0
     ],
     [
-     848,
+     928,
      0
     ]
    ],
@@ -639,10 +639,10 @@
   {
    "id": "step-3-ai-text-18",
    "type": "text",
-   "x": 640,
-   "y": 325,
-   "width": 363.00000000000006,
-   "height": 25.0,
+   "x": 624,
+   "y": 297.5,
+   "width": 399.3,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -664,7 +664,7 @@
    "locked": false,
    "text": "2  model call 1: question + tools",
    "originalText": "2  model call 1: question + tools",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -675,9 +675,9 @@
   {
    "id": "step-3-ai-arrow-19",
    "type": "arrow",
-   "x": 1444,
-   "y": 440,
-   "width": 848,
+   "x": 1534,
+   "y": 405,
+   "width": 928,
    "height": 0,
    "angle": 0,
    "strokeColor": "#5c2d91",
@@ -704,7 +704,7 @@
      0
     ],
     [
-     -848,
+     -928,
      0
     ]
    ],
@@ -718,10 +718,10 @@
   {
    "id": "step-3-ai-text-20",
    "type": "text",
-   "x": 1100,
-   "y": 405,
-   "width": 297.0,
-   "height": 25.0,
+   "x": 1189.3,
+   "y": 367.5,
+   "width": 326.70000000000005,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -743,7 +743,7 @@
    "locked": false,
    "text": "3  please call listProducts",
    "originalText": "3  please call listProducts",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -754,9 +754,9 @@
   {
    "id": "step-3-ai-arrow-21",
    "type": "arrow",
-   "x": 596,
-   "y": 520,
-   "width": 428,
+   "x": 606,
+   "y": 475,
+   "width": 468,
    "height": 0,
    "angle": 0,
    "strokeColor": "#b11f4b",
@@ -783,7 +783,7 @@
      0
     ],
     [
-     428,
+     468,
      0
     ]
    ],
@@ -797,10 +797,10 @@
   {
    "id": "step-3-ai-text-22",
    "type": "text",
-   "x": 640,
-   "y": 485,
-   "width": 231.00000000000003,
-   "height": 25.0,
+   "x": 624,
+   "y": 437.5,
+   "width": 254.10000000000002,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -822,7 +822,7 @@
    "locked": false,
    "text": "4  run listProducts()",
    "originalText": "4  run listProducts()",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -833,9 +833,9 @@
   {
    "id": "step-3-ai-arrow-23",
    "type": "arrow",
-   "x": 1024,
-   "y": 600,
-   "width": 428,
+   "x": 1074,
+   "y": 545,
+   "width": 468,
    "height": 0,
    "angle": 0,
    "strokeColor": "#b11f4b",
@@ -862,7 +862,7 @@
      0
     ],
     [
-     -428,
+     -468,
      0
     ]
    ],
@@ -876,10 +876,10 @@
   {
    "id": "step-3-ai-text-24",
    "type": "text",
-   "x": 640,
-   "y": 565,
-   "width": 330.0,
-   "height": 25.0,
+   "x": 693.0,
+   "y": 507.5,
+   "width": 363.00000000000006,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -901,7 +901,7 @@
    "locked": false,
    "text": "5  six products, prices, stock",
    "originalText": "5  six products, prices, stock",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -912,9 +912,9 @@
   {
    "id": "step-3-ai-arrow-25",
    "type": "arrow",
-   "x": 596,
-   "y": 680,
-   "width": 848,
+   "x": 606,
+   "y": 615,
+   "width": 928,
    "height": 0,
    "angle": 0,
    "strokeColor": "#5c2d91",
@@ -941,7 +941,7 @@
      0
     ],
     [
-     848,
+     928,
      0
     ]
    ],
@@ -955,10 +955,10 @@
   {
    "id": "step-3-ai-text-26",
    "type": "text",
-   "x": 640,
-   "y": 645,
-   "width": 319.0,
-   "height": 25.0,
+   "x": 624,
+   "y": 577.5,
+   "width": 350.90000000000003,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -980,7 +980,7 @@
    "locked": false,
    "text": "6  model call 2: the products",
    "originalText": "6  model call 2: the products",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -991,9 +991,9 @@
   {
    "id": "step-3-ai-arrow-27",
    "type": "arrow",
-   "x": 1444,
-   "y": 790,
-   "width": 848,
+   "x": 1534,
+   "y": 715,
+   "width": 928,
    "height": 0,
    "angle": 0,
    "strokeColor": "#5c2d91",
@@ -1020,7 +1020,7 @@
      0
     ],
     [
-     -848,
+     -928,
      0
     ]
    ],
@@ -1034,10 +1034,10 @@
   {
    "id": "step-3-ai-text-28",
    "type": "text",
-   "x": 1080,
-   "y": 730,
-   "width": 308.0,
-   "height": 50.0,
+   "x": 1128.8,
+   "y": 650.0,
+   "width": 387.20000000000005,
+   "height": 55.0,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -1057,9 +1057,9 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "7  Out of stock. Try the\n    Trail Rain Jacket ($99).",
-   "originalText": "7  Out of stock. Try the\n    Trail Rain Jacket ($99).",
-   "fontSize": 20,
+   "text": "7  Out of stock.\nTry the Trail Rain Jacket ($99).",
+   "originalText": "7  Out of stock.\nTry the Trail Rain Jacket ($99).",
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -1070,9 +1070,9 @@
   {
    "id": "step-3-ai-arrow-29",
    "type": "arrow",
-   "x": 584,
-   "y": 880,
-   "width": 398,
+   "x": 594,
+   "y": 785,
+   "width": 408,
    "height": 0,
    "angle": 0,
    "strokeColor": "#495057",
@@ -1099,7 +1099,7 @@
      0
     ],
     [
-     -398,
+     -408,
      0
     ]
    ],
@@ -1113,10 +1113,10 @@
   {
    "id": "step-3-ai-text-30",
    "type": "text",
-   "x": 200,
-   "y": 845,
-   "width": 286.0,
-   "height": 25.0,
+   "x": 261.4,
+   "y": 747.5,
+   "width": 314.6,
+   "height": 27.5,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -1138,7 +1138,7 @@
    "locked": false,
    "text": "8  the answer, on the page",
    "originalText": "8  the answer, on the page",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "left",
    "verticalAlign": "top",
@@ -1150,9 +1150,9 @@
    "id": "step-3-ai-rectangle-31",
    "type": "rectangle",
    "x": 60,
-   "y": 945,
-   "width": 720,
-   "height": 90,
+   "y": 840,
+   "width": 760,
+   "height": 95,
    "angle": 0,
    "strokeColor": "#e67700",
    "backgroundColor": "#fff3bf",
@@ -1183,10 +1183,10 @@
   {
    "id": "step-3-ai-text-32",
    "type": "text",
-   "x": 166.99999999999997,
-   "y": 965.0,
-   "width": 506.00000000000006,
-   "height": 50.0,
+   "x": 161.7,
+   "y": 860.0,
+   "width": 556.6,
+   "height": 55.0,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -1208,7 +1208,7 @@
    "locked": false,
    "text": "No API keys. The app signs in with its managed\nidentity, which has the Foundry User role.",
    "originalText": "No API keys. The app signs in with its managed\nidentity, which has the Foundry User role.",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",
@@ -1219,10 +1219,10 @@
   {
    "id": "step-3-ai-rectangle-33",
    "type": "rectangle",
-   "x": 840,
-   "y": 945,
-   "width": 760,
-   "height": 90,
+   "x": 880,
+   "y": 840,
+   "width": 820,
+   "height": 95,
    "angle": 0,
    "strokeColor": "#e67700",
    "backgroundColor": "#fff3bf",
@@ -1253,10 +1253,10 @@
   {
    "id": "step-3-ai-text-34",
    "type": "text",
-   "x": 967.0,
-   "y": 965.0,
-   "width": 506.00000000000006,
-   "height": 50.0,
+   "x": 1011.7,
+   "y": 860.0,
+   "width": 556.6,
+   "height": 55.0,
    "angle": 0,
    "strokeColor": "#000000",
    "backgroundColor": "transparent",
@@ -1278,7 +1278,7 @@
    "locked": false,
    "text": "Guardrails: 300 characters in, 300 tokens out,\nand at most 30 requests a minute.",
    "originalText": "Guardrails: 300 characters in, 300 tokens out,\nand at most 30 requests a minute.",
-   "fontSize": 20,
+   "fontSize": 22,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",

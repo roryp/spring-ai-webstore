@@ -19,7 +19,7 @@ Each step is a complete Spring Boot app in its own folder, and each adds one ide
 
 Java developers who are new to Azure, containers, or AI. You need to know a little Java. Each step's README explains the rest.
 
-- **Presenting?** Use the [presenter guide](docs/presenter.md).
+- **Presenting?** Use the [presenter guide](docs/presenter.md) and the [workshop slides](docs/trail-store-workshop.pptx).
 - **In a workshop?** Follow the [45-minute workshop](docs/workshop.md). You only need a browser.
 
 ## Words you'll meet

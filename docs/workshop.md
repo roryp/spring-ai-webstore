@@ -2,7 +2,7 @@
 
 You only need a browser. You read the code on GitHub and try the live apps. Deploying your own copy is optional homework.
 
-Your presenter shares the links to the live apps. They look like `https://ca-....azurecontainerapps.io`.
+Your presenter shares the links to the live apps. They look like `https://ca-....azurecontainerapps.io`. The [slides](trail-store-workshop.pptx) follow this guide.
 
 ## 1. The plan (3 minutes)
 
