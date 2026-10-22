@@ -1,6 +1,7 @@
 .git
 .github
 .azure
+.demo
 .playwright-mcp
 .idea
 .vscode

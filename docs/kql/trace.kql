@@ -3,7 +3,9 @@ let TraceId = "PASTE_TRACE_ID";
 union requests, dependencies
 | where timestamp > ago(24h)
 | where operation_Id == TraceId
+| extend Operation = tostring(customDimensions["gen_ai.operation.name"])
+| where itemType == "request" or Operation in ("invoke_agent", "chat", "execute_tool")
 | project timestamp, name, duration, success, id, operation_ParentId,
-          Operation = tostring(customDimensions["gen_ai.operation.name"]),
+          Operation,
           Agent = tostring(customDimensions["gen_ai.agent.id"])
 | order by timestamp asc

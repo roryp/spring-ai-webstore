@@ -11,6 +11,45 @@ Four prepared checkpoints tell the story:
 
 Twelve products. No database, checkout, accounts, or microservices.
 
+## Start here: presenter edition
+
+**Everything is prepared before the event. No live builds, deployments, or branch switching.**
+
+| Phase | Prepared app | Code checkpoint |
+|---|---|---|
+| 1. Local | [Local catalog](http://127.0.0.1:8080), started below | [stage-1](https://github.com/roryp/spring-ai-webstore/tree/stage-1) |
+| 2. Azure | [Azure catalog](https://ca-trail-stage-2.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-2](https://github.com/roryp/spring-ai-webstore/tree/stage-2) |
+| 3. AI | [Inventory assistant](https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-3](https://github.com/roryp/spring-ai-webstore/tree/stage-3) |
+| 4. Observe | [Observable assistant](https://ca-trail-stage-4.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-4](https://github.com/roryp/spring-ai-webstore/tree/stage-4) |
+
+Before the event, in PowerShell 7:
+
+```powershell
+.\scripts\Prepare-Presenter.ps1 -WarmAzure
+.\scripts\Start-Local.ps1
+```
+
+The first command prepares immutable code folders and warms the cloud apps.
+The second runs the already-built local checkpoint; leave its terminal open.
+For local-only preparation, omit `-WarmAzure`. After the first preparation,
+`-Offline` works with cached dependencies and local tags.
+
+- [One-hour presenter cue sheet](docs/presenter.md): what to click, say, show, and use if something fails.
+- [45-minute participant guide](docs/workshop.md): browser-only, no Azure subscription needed.
+- [Offline backup gallery](http://127.0.0.1:8080/backups.html): four **real recordings**, screenshots, and captured token results.
+- [Verification and remaining human checks](docs/verification.md).
+
+The AI apps require the presenter-supplied workshop code. On the prepared machine
+it is in the gitignored `.azure/workshop-access.txt`; it is deliberately not in this
+repository. Ask the presenter if you are following along. Each question starts fresh.
+
+The Application Insights connection and Foundry external-agent registration are
+verified through their APIs. **Visual portal sign-in and a timed presenter/audience
+rehearsal remain human pre-event checks.** The local backups do not depend on them.
+
+Cloud resources are billable. The preparation command keeps one replica warm per
+app; restore zero after the event or follow [cleanup](docs/cleanup.md).
+
 ## Run this checkpoint
 
 Install JDK 25. The Maven wrapper downloads Maven on the first run.

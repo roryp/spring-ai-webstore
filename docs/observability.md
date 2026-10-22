@@ -60,6 +60,9 @@ surfaces. Verify them before the event. They are not a production SLA promise.
 
 For the trace tree, [trace.kql](kql/trace.kql) joins requests and dependencies
 by the real trace ID. Do not use the unrelated request UUID as a trace ID.
+The managed collector prefixes the role name with its environment namespace.
+The saved queries match the phase-4 role suffix as well as the assistant ID.
+The short trace query hides framework plumbing so the teaching sequence stays readable.
 
 ## Tokens and cost: what to say
 
@@ -93,3 +96,16 @@ can lose data, and sampled production traces need different accounting.
   credential. Model key authentication stays disabled and inference uses identity.
 - Test the portal login and permissions before going live. If a portal is unavailable,
   use the saved capture and say explicitly that it is recorded.
+
+## Verification status
+
+The three prepared phase-4 questions were found in Application Insights with
+correlated `invoke_agent`, `chat`, and `execute_tool` spans and no missing model
+usage fields. Actual totals and trace IDs are saved in
+[telemetry.json](media/telemetry.json).
+
+The Foundry project connection and external-agent registration were verified by
+API. The automated browser was not signed into Foundry, and the presenter chose
+to defer interactive sign-in. **The Foundry portal's visual trace view has not
+been verified or captured.** Open it during pre-event preparation, not on stage.
+The offline gallery uses verified query results, not a simulated portal screenshot.

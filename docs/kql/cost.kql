@@ -4,8 +4,9 @@ let InputUsdPerMillion = real(null);
 let CachedInputUsdPerMillion = real(null);
 let OutputUsdPerMillion = real(null);
 dependencies
-| where timestamp > ago(1h)
-| where cloud_RoleName == "trail-store-phase-4"
+| where timestamp > ago(24h)
+| where cloud_RoleName == "trail-store-phase-4" or cloud_RoleName endswith ".trail-store-phase-4"
+| where tostring(customDimensions["gen_ai.agent.id"]) == "trail-store-assistant"
 | where tostring(customDimensions["gen_ai.operation.name"]) == "chat"
 | extend InputTokens = tolong(customDimensions["gen_ai.usage.input_tokens"]),
          OutputTokens = tolong(customDimensions["gen_ai.usage.output_tokens"]),
