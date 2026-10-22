@@ -46,16 +46,22 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
 
 ### 0:00 · Introduction (3 minutes)
 
-- **Show:** the [README](../README.md) table.
+- **Show:** the four-step diagram at the top of the [README](../README.md).
 - **Say:** "One store, four steps. Each step is a folder, and each adds one idea: run it, ship it, add AI, and see inside it."
+
+![The four steps](diagrams/journey.png)
 
 ### 0:03 · Step 1: on my laptop (7 minutes)
 
+- **Show:** the diagram in the [step 1 README](../step-1-local/README.md#how-it-works). Follow the numbers with your mouse.
 - **Click:** [Catalog.java](../step-1-local/src/main/java/com/contoso/store/Catalog.java), [StoreController.java](../step-1-local/src/main/java/com/contoso/store/StoreController.java), [index.html](../step-1-local/src/main/resources/templates/index.html), then the localhost tab.
 - **Say:** "Six products, one controller, one page. It works, but only on my laptop. Nobody else can use it, and I start it by hand."
 
+![How step 1 works](diagrams/step-1-local.png)
+
 ### 0:10 · Step 2: on Azure (10 minutes)
 
+- **Show:** the diagram in the [step 2 README](../step-2-azure/README.md#how-it-works).
 - **Click:** [Dockerfile](../step-2-azure/Dockerfile), [azure.yaml](../step-2-azure/azure.yaml), [app.bicep](../step-2-azure/infra/app.bicep), then the step 2 tab.
 - **Say:**
   - "The Java code didn't change. We added a Dockerfile to pack the app, `azure.yaml` to name it, and Bicep to describe the Azure resources."
@@ -63,8 +69,11 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "The app pulls its image with its managed identity, so there's no password. It scales to zero, so it costs nothing when nobody's using it."
 - **Optional:** in GitHub, open **Actions**. "Every pull request builds and tests all four steps."
 
+![What azd up does](diagrams/step-2-azure.png)
+
 ### 0:20 · Step 3: an AI assistant (13 minutes)
 
+- **Show:** the diagram in the [step 3 README](../step-3-ai/README.md#how-a-question-gets-answered). "Follow the numbers: two calls to the model, and one call to our own Java code in between."
 - **Click:** [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java), [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java), [application.properties](../step-3-ai/src/main/resources/application.properties), the Foundry part of [app.bicep](../step-3-ai/infra/app.bicep). Then, in the step 3 tab, select the three example questions.
 - **Say:**
   - "The model can't see our catalog. So we give it a tool: one Java method with `@Tool`. Spring AI runs it when the model asks."
@@ -73,9 +82,12 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "Guardrails keep the cost down: 300 characters in, 300 tokens out, and at most 30 requests a minute."
 - **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
 
+![How a question gets answered](diagrams/step-3-ai.png)
+
 ### 0:33 · Step 4: see inside (12 minutes)
 
 - **First:** in the step 4 tab, select **Summit jacket in stock?** Its trace takes one to three minutes to reach Application Insights, so ask now and show the code while you wait.
+- **Show:** the first diagram in the [step 4 README](../step-4-observe/README.md#whats-new): how traces get to Application Insights.
 - **Click:** [pom.xml](../step-4-observe/pom.xml) (one dependency), [application.properties](../step-4-observe/src/main/resources/application.properties) (three lines), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
 - **Say:**
   - "The app's code didn't change: one dependency, three settings, and Application Insights in Bicep."
@@ -83,9 +95,15 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "The traces show timings and token counts, but not what people asked."
   - "Seeing what your app does, and what it costs, is a big step toward running it in production."
 
+![How traces get to Application Insights](diagrams/step-4-pipeline.png)
+
+If the portal is slow, show this diagram of a real trace instead. It's in the step 4 README too.
+
+![One question, as a trace](diagrams/step-4-trace.png)
+
 ### 0:45 · Wrap-up (5 minutes)
 
-- **Show:** the README table again.
+- **Show:** the four-step diagram again.
 - **Say:** "Run it, ship it, add AI, see inside it. To try it yourself, run `azd up` in any step folder, and `azd down --purge` when you're done."
 
 ### 0:50 · Questions (10 minutes)
@@ -96,7 +114,7 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
 |---|---|
 | An Azure app is slow to open | It's waking up. Wait, or show the screenshot in that step's README. |
 | The assistant says it "could not answer right now" | Say, "It fails honestly instead of making something up." Ask again a few seconds later, or show the step 3 screenshot. |
-| Application Insights shows no data yet | Data takes one to three minutes to arrive. Your warm-up question is already there. Otherwise, show your rehearsal screenshots, or the results table in the [step 4 README](../step-4-observe/README.md#see-it-in-azure). |
+| Application Insights shows no data yet | Data takes one to three minutes to arrive. Your warm-up question is already there. Otherwise, show the trace diagram above, your rehearsal screenshots, or the results table in the [step 4 README](../step-4-observe/README.md#see-it-in-azure). |
 | Step 1 won't start on your laptop | Show the step 1 screenshot, and continue with step 2. |
 
 ## Running the 45-minute workshop

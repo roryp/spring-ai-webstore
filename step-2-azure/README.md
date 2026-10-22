@@ -4,6 +4,10 @@ The Java code is the same as in step 1. Only the label at the top of the page ch
 
 ![The store running on Azure](../docs/screenshots/step-2.png)
 
+## How it works
+
+![Diagram: azd up takes the Dockerfile, azure.yaml and Bicep files. It creates a container registry, a managed identity and a container app in one resource group, builds the image in Azure, and deploys it behind a public HTTPS address. The managed identity lets the app pull its image without a password.](../docs/diagrams/step-2-azure.png)
+
 ## What's new
 
 | File | What it does |

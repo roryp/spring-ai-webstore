@@ -13,3 +13,4 @@ This repo teaches cloud-native Java in four small steps. Each `step-*` folder is
 - Never commit credentials or `.azure/` folders.
 - New behavior needs a test. Failures must be visible and honest.
 - Keep UI colors in the CSS variables at the top of `style.css`.
+- Diagrams live in `docs/diagrams`. Keep each `.excalidraw` source next to its exported `.png`, and update both together.
