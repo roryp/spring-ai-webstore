@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -19,7 +19,20 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
-      - name: Verify
-        run: ./mvnw -B -ntp verify
-      - name: Validate infrastructure
-        run: az bicep build --file infra/main.bicep --stdout > /dev/null
+      - name: Build and test every step
+        run: |
+          for step in step-*/; do
+            echo "::group::$step"
+            (cd "$step" && ./mvnw -B -ntp verify)
+            echo "::endgroup::"
+          done
+      - name: Check every Azure template compiles
+        run: |
+          for template in step-*/infra/main.bicep; do
+            az bicep build --file "$template" --stdout > /dev/null
+          done
+      - name: Check every container image builds
+        run: |
+          for dockerfile in step-*/Dockerfile; do
+            docker build --quiet "$(dirname "$dockerfile")"
+          done

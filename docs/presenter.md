@@ -1,73 +1,114 @@
-# Presenter cue sheet: one hour, point and click
+# Presenter guide (1 hour)
 
-**Do not build, deploy, merge, change branches, or wait for an agent on stage.**
-Tell the audience these are prepared snapshots of one application's evolution.
+Everything is deployed before the event. On stage you only open files and click links. Nothing is built or deployed live.
+
+## Your links
+
+| Step | App | Code |
+|---|---|---|
+| 1 | <http://localhost:8080> (start it before the event) | [step-1-local](../step-1-local) |
+| 2 | <https://ca-4scup3zlsthac.calmocean-83820dbb.swedencentral.azurecontainerapps.io> | [step-2-azure](../step-2-azure) |
+| 3 | <https://ca-tst5kvf5kukdg.greenpebble-85b82203.swedencentral.azurecontainerapps.io> | [step-3-ai](../step-3-ai) |
+| 4 | <https://ca-n4b4dfoneyxru.ashypebble-55a62ce4.swedencentral.azurecontainerapps.io> | [step-4-observe](../step-4-observe) |
+
+Step 4's traces are in the Application Insights resource `appi-n4b4dfoneyxru`, in the resource group `rg-trail-step4`.
+
+These links belong to the current deployment. If you deploy a step under a new environment name, its URL changes. To see a step's URL, run `azd env get-value WEBSITE_URL` in its folder.
 
 ## Before the event
 
-1. Run `.\scripts\Prepare-Presenter.ps1 -WarmAzure` with your prepared azd environment selected.
-2. In another terminal, run `.\scripts\Start-Local.ps1`. Leave it running.
-3. Enter the private workshop code once on each AI app's tab; do not display the code on a recording.
-4. Sign in to Application Insights and Foundry. Open an existing verified trace and token-query results.
-5. Open [local backups](http://127.0.0.1:8080/backups.html) and verify recordings play without internet.
-6. Set browser/VS Code zoom for the room, disable notifications, and close unrelated tabs.
+The day before:
 
-The preflight prints today's trace IDs. It does not overwrite the frozen backup captures.
+- [ ] In a new terminal, run `java -version`. It should show version 25. If `mvnw` reports an invalid `JAVA_HOME`, set `JAVA_HOME` to your JDK 25 folder and open a new terminal.
+- [ ] Sign in to the Azure CLI, which is a different tool from `azd`. Run `az login`, and check that `az account show` shows the subscription you deployed to. Then run `az extension add --name containerapp --upgrade` once.
+- [ ] Sign in to the [Azure portal](https://portal.azure.com). Open `appi-n4b4dfoneyxru` > **Logs**, paste the query from the [step 4 README](../step-4-observe/README.md#see-it-in-azure), and save it.
+- [ ] Rehearse the whole run of show once. While you do, take two screenshots in Application Insights: the query result, and the transaction diagnostics of one `http post /ask` request. They're your fallback if Application Insights is slow on the day.
 
-The code lives in the gitignored `.azure/workshop-access.txt`. Share it privately
-with workshop participants, not in the public repository.
+30 minutes before:
 
-## Your sequence
+- [ ] Keep one copy of each Azure app running, so nobody waits for an app to wake up. Otherwise, the first visit after a quiet spell can take up to a minute.
 
-| Time | Click | Say | Show only |
-|---|---|---|---|
-| 0-5 | This roadmap | "Modernization creates the foundation for what comes next." | The four phase names |
-| 5-13 | [Local catalog](http://127.0.0.1:8080) | "It works on my laptop." | A filter; phase-1 CatalogService |
-| 13-25 | [Azure catalog](https://ca-trail-stage-2.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | "Same business code. Repeatable deployment." | azure.yaml; Bicep entry point; merged PR; green workflow |
-| 25-40 | [AI catalog](https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | "The model asks our application for product facts." | Two prepared questions; InventoryTools; managed identity |
-| 40-50 | [Observed app](https://ca-trail-stage-4.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io), then saved trace | "Now I can see the request, tool calls, and tokens." | One existing trace; one token query; Foundry's external-agent view |
-| 50-60 | Recap and Q&A | "Local. Azure. AI. Observe." | Participant guide and releases |
+  ```powershell
+  az containerapp update -g rg-trail-step2 -n ca-4scup3zlsthac --min-replicas 1
+  az containerapp update -g rg-trail-step3 -n ca-tst5kvf5kukdg --min-replicas 1
+  az containerapp update -g rg-trail-step4 -n ca-n4b4dfoneyxru --min-replicas 1
+  ```
 
-### Exactly two live AI prompts
+- [ ] In `step-1-local`, run `.\mvnw.cmd spring-boot:run` and leave the terminal open.
+- [ ] Open the four app links. In steps 3 and 4, select **Summit jacket in stock?** once. The first answer after a restart takes up to 20 seconds; after that, answers take 3 to 4 seconds. Your step 4 warm-up question also gives the saved query something to show.
+- [ ] Open these tabs: this repo on GitHub, the four apps, Application Insights **Logs**, and the transaction diagnostics of your warm-up question.
 
-1. "Which waterproof jackets under $150 are in stock?"
-2. "Is JKT-003 available? Show an in-stock alternative."
+After the event, run the same three commands with `--min-replicas 0`, or delete everything as described in [Clean up](../README.md#clean-up).
 
-If desired, use "Show two in-stock items for a rainy day hike, with their prices
-and SKUs" as the third, rehearsed example. No surprise audience prompts are needed.
-While an answer is pending, explain the tool method. Do not repeatedly click Send.
+## Run of show
 
-### The cost sentence
+The script takes 50 minutes. That leaves 10 minutes for questions, or for anything that goes wrong.
 
-"Each question can make several model calls. We cap the output, tool calls, input,
-concurrency, and request rate. These token counts help us reason about cost."
+### 0:00 · Introduction (3 minutes)
 
-Do not quote an unverified model price, promise a tuning change saves money, or
-describe trace estimates as billing. The saved cost query keeps unknown rates null.
+- **Show:** the [README](../README.md) table.
+- **Say:** "One store, four steps. Each step is a folder, and each adds one idea: run it, ship it, add AI, and see inside it."
 
-## If anything fails
+### 0:03 · Step 1: on my laptop (7 minutes)
 
-Allow one short retry, then open the corresponding item in the local backup gallery.
-Say: **"This is the recorded run of the same checkpoint."** Continue explaining the code.
+- **Click:** [Catalog.java](../step-1-local/src/main/java/com/contoso/store/Catalog.java), [StoreController.java](../step-1-local/src/main/java/com/contoso/store/StoreController.java), [index.html](../step-1-local/src/main/resources/templates/index.html), then the localhost tab.
+- **Say:** "Six products, one controller, one page. It works, but only on my laptop. Nobody else can use it, and I start it by hand."
 
-| Problem | Fallback |
+### 0:10 · Step 2: on Azure (10 minutes)
+
+- **Click:** [Dockerfile](../step-2-azure/Dockerfile), [azure.yaml](../step-2-azure/azure.yaml), [app.bicep](../step-2-azure/infra/app.bicep), then the step 2 tab.
+- **Say:**
+  - "The Java code didn't change. We added a Dockerfile to pack the app, `azure.yaml` to name it, and Bicep to describe the Azure resources."
+  - "One command, `azd up`, created all of this in about 5 minutes."
+  - "The app pulls its image with its managed identity, so there's no password. It scales to zero, so it costs nothing when nobody's using it."
+- **Optional:** in GitHub, open **Actions**. "Every pull request builds and tests all four steps."
+
+### 0:20 · Step 3: an AI assistant (13 minutes)
+
+- **Click:** [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java), [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java), [application.properties](../step-3-ai/src/main/resources/application.properties), the Foundry part of [app.bicep](../step-3-ai/infra/app.bicep). Then, in the step 3 tab, select the three example questions.
+- **Say:**
+  - "The model can't see our catalog. So we give it a tool: one Java method with `@Tool`. Spring AI runs it when the model asks."
+  - "There are no API keys. They're switched off in Foundry, and the app signs in with its managed identity."
+  - "The Summit jacket is out of stock, and the assistant says so, then suggests jackets that are in stock. It uses real facts, not guesses."
+  - "Guardrails keep the cost down: 300 characters in, 300 tokens out, and at most 30 requests a minute."
+- **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
+
+### 0:33 · Step 4: see inside (12 minutes)
+
+- **First:** in the step 4 tab, select **Summit jacket in stock?** Its trace takes one to three minutes to reach Application Insights, so ask now and show the code while you wait.
+- **Click:** [pom.xml](../step-4-observe/pom.xml) (one dependency), [application.properties](../step-4-observe/src/main/resources/application.properties) (three lines), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
+- **Say:**
+  - "The app's code didn't change: one dependency, three settings, and Application Insights in Bicep."
+  - "A question about the products is two model calls and one tool call. Here are the tokens, and here's the cost: less than a hundredth of a cent."
+  - "The traces show timings and token counts, but not what people asked."
+  - "Seeing what your app does, and what it costs, is a big step toward running it in production."
+
+### 0:45 · Wrap-up (5 minutes)
+
+- **Show:** the README table again.
+- **Say:** "Run it, ship it, add AI, see inside it. To try it yourself, run `azd up` in any step folder, and `azd down --purge` when you're done."
+
+### 0:50 · Questions (10 minutes)
+
+## If something goes wrong
+
+| Problem | What to do |
 |---|---|
-| Local app unavailable | Open the saved phase-1 screenshot directly from docs/media |
-| Azure unavailable | Local phase recording or screenshot |
-| Chat slow, busy, or throttled | Recorded answer/clip; never pretend a canned answer is live |
-| Fresh trace not visible | The existing trace you opened before the event |
-| Portal logged out | Saved sanitized trace capture/results |
-| Network down | Local code snapshots in .demo and local backup gallery |
+| An Azure app is slow to open | It's waking up. Wait, or show the screenshot in that step's README. |
+| The assistant says it "could not answer right now" | Say, "It fails honestly instead of making something up." Ask again a few seconds later, or show the step 3 screenshot. |
+| Application Insights shows no data yet | Data takes one to three minutes to arrive. Your warm-up question is already there. Otherwise, show your rehearsal screenshots, or the results table in the [step 4 README](../step-4-observe/README.md#see-it-in-azure). |
+| Step 1 won't start on your laptop | Show the step 1 screenshot, and continue with step 2. |
 
-## After the event
+## Running the 45-minute workshop
 
-Restore zero minimum replicas if keeping the demo temporarily. Delete the dedicated
-resource group only when all attendees are finished. See [cleanup](cleanup.md).
-No cleanup or identity changes are part of the live presentation.
+In the [workshop](workshop.md), attendees ask questions in the step 3 app. At its normal capacity, the model accepts 30 requests a minute, which is about 15 questions. That's enough for you alone, but not for a room.
 
-## Final human checks
+The day before a workshop, raise the capacity to 300, which is about 150 questions a minute:
 
-- [ ] Rehearse this exact sequence within 50 minutes, leaving ten for Q&A/buffer.
-- [ ] Have someone who did not build the app complete the participant guide within 45 minutes.
-- [ ] Confirm the expected audience fits the shared demo limits or use the recorded path.
-- [ ] Verify portal sign-in and the selected trace on the actual presentation machine.
+```powershell
+az cognitiveservices account deployment create -g rg-trail-step3 -n ai-tst5kvf5kukdg --deployment-name gpt-6-luna --model-name gpt-6-luna --model-version 2026-09-22 --model-format OpenAI --sku-name GlobalStandard --sku-capacity 300
+```
+
+The price per token stays the same, and the app keeps running while you change it. Even at 300, if everyone clicks in the same second, some people may see "could not answer right now". Ask them to try again a few seconds later.
+
+After the workshop, run the same command with `--sku-capacity 30`.

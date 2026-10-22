@@ -1,102 +1,87 @@
 # Trail Store
 
-A tiny Spring AI web store for a 45-minute workshop and a one-hour Microsoft live event.
+Take a Java app from "runs on my laptop" to "runs on Azure, with an AI assistant you can see inside", in four small steps.
 
-Four prepared checkpoints tell the story:
+Each step is a complete Spring Boot app in its own folder, and each adds one idea to the step before it.
 
-1. A local Spring Boot catalog.
-2. The same application deployed to Azure Container Apps.
-3. Inventory questions answered with Spring AI and Microsoft Foundry.
-4. Requests, tools, and token usage made visible with OpenTelemetry.
+| Step | Folder | The one new idea | Runs |
+|---|---|---|---|
+| 1 | [step-1-local](step-1-local) | A plain Spring Boot store with six products | On your laptop |
+| 2 | [step-2-azure](step-2-azure) | The same app on Azure Container Apps, deployed with one command | On Azure |
+| 3 | [step-3-ai](step-3-ai) | An AI assistant, using Microsoft Foundry, that reads the real stock | On Azure |
+| 4 | [step-4-observe](step-4-observe) | OpenTelemetry: see each request, AI call, token count, and cost | On Azure |
 
-Twelve products. No database, checkout, accounts, or microservices.
+![The store at step 4](docs/screenshots/step-4.png)
 
-## Start here: presenter edition
+## Who it's for
 
-**Everything is prepared before the event. No live builds, deployments, or branch switching.**
+Java developers who are new to Azure, containers, or AI. You need to know a little Java. Each step's README explains the rest.
 
-| Phase | Prepared app | Code checkpoint |
+- **Presenting?** Use the [presenter guide](docs/presenter.md).
+- **In a workshop?** Follow the [45-minute workshop](docs/workshop.md). You only need a browser.
+
+## Words you'll meet
+
+- **Container**: your app packed together with everything it needs to run, such as Java, so it runs the same way everywhere.
+- **Bicep**: a language for describing Azure resources in a file, so you can create them again and again.
+- **Managed identity**: an identity that Azure gives your app, so it can use other Azure services without passwords or keys.
+- **Token**: a small piece of text, roughly three-quarters of a word. AI models are priced per token.
+- **Tool**: a method in your code that the AI model can ask to run, to get facts it doesn't have.
+- **Trace** and **span**: a trace is the timeline of one request. Each timed step inside it, such as one call to the model, is a span.
+
+## Try it yourself
+
+### Step 1, on your laptop
+
+You need [Java 25](https://learn.microsoft.com/java/openjdk/download).
+
+```bash
+cd step-1-local
+./mvnw spring-boot:run
+```
+
+On Windows, use `.\mvnw.cmd spring-boot:run`. Then open <http://localhost:8080>.
+
+### Steps 2 to 4, on Azure
+
+You need:
+
+- An Azure subscription where you can create resources and assign roles, for example as an Owner.
+- The [Azure Developer CLI](https://aka.ms/azd-install) (`azd`). You don't need Docker, because Azure builds the container image.
+
+```bash
+cd step-2-azure
+azd auth login
+azd up
+```
+
+For steps 3 and 4, run `azd up` in `step-3-ai` or `step-4-observe` instead. `azd up` asks for an environment name (for example, `trail-step2`), a subscription, and a region. After about 5 minutes, it prints the app's URL. Each step deploys into its own resource group, `rg-<environment name>`.
+
+Steps 3 and 4 deploy the `gpt-6-luna` model, so pick a region where your subscription has quota for it. We used Sweden Central.
+
+## What it costs
+
+These are Azure retail prices in US dollars for Sweden Central, checked on 22 October 2026 with the [Azure Retail Prices API](https://learn.microsoft.com/rest/api/cost-management/retail-prices/azure-retail-prices).
+
+| Service | Price | In this demo |
 |---|---|---|
-| 1. Local | [Local catalog](http://127.0.0.1:8080), started below | [stage-1](https://github.com/roryp/spring-ai-webstore/tree/stage-1) |
-| 2. Azure | [Azure catalog](https://ca-trail-stage-2.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-2](https://github.com/roryp/spring-ai-webstore/tree/stage-2) |
-| 3. AI | [Inventory assistant](https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-3](https://github.com/roryp/spring-ai-webstore/tree/stage-3) |
-| 4. Observe | [Observable assistant](https://ca-trail-stage-4.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io) | [stage-4](https://github.com/roryp/spring-ai-webstore/tree/stage-4) |
+| Container Registry, Basic | $0.1666 a day | About $5 a month for each step you deploy. This is the main fixed cost. |
+| Container Apps, Consumption | $0.000024 per vCPU-second and $0.000003 per GiB-second while running | The app scales to zero when it's idle. A busy hour costs about $0.05. |
+| GPT-6 Luna, Global Standard | $0.10 per 1M input tokens and $0.50 per 1M output tokens | One question uses about 540 input and 50 output tokens, so it costs about $0.00008. That's about 8 cents for 1,000 questions. |
+| Log Analytics (step 4 only) | The first 5 GB a month are free, then $2.99 per GB | A demo sends a few megabytes. |
 
-Before the event, in PowerShell 7:
+Anyone with the link can use the chat page. The model deployment accepts at most 30 requests and 30,000 tokens a minute. A question about the products is two requests, so the assistant answers about 15 questions a minute. This also caps the cost: even nonstop traffic costs at most about $0.90 an hour for the model.
 
-```powershell
-.\scripts\Prepare-Presenter.ps1 -WarmAzure
-.\scripts\Start-Local.ps1
+## Clean up
+
+In each step folder that you deployed, run:
+
+```bash
+azd down --purge
 ```
 
-The first command prepares immutable code folders and warms the cloud apps.
-The second runs the already-built local checkpoint; leave its terminal open.
-For local-only preparation, omit `-WarmAzure`. After the first preparation,
-`-Offline` works with cached dependencies and local tags.
+This deletes the resource group and everything in it.
 
-- [One-hour presenter cue sheet](docs/presenter.md): what to click, say, show, and use if something fails.
-- [45-minute participant guide](docs/workshop.md): browser-only, no Azure subscription needed.
-- [Offline backup gallery](http://127.0.0.1:8080/backups.html): four **real recordings**, screenshots, and captured token results.
-- [Verification and remaining human checks](docs/verification.md).
+## How this repo is built
 
-The AI apps require the presenter-supplied workshop code. On the prepared machine
-it is in the gitignored `.azure/workshop-access.txt`; it is deliberately not in this
-repository. Ask the presenter if you are following along. Each question starts fresh.
-
-The Application Insights connection and Foundry external-agent registration are
-verified through their APIs. **Visual portal sign-in and a timed presenter/audience
-rehearsal remain human pre-event checks.** The local backups do not depend on them.
-
-Cloud resources are billable. The preparation command keeps one replica warm per
-app; restore zero after the event or follow [cleanup](docs/cleanup.md).
-
-## Run this checkpoint
-
-Install JDK 25. The Maven wrapper downloads Maven on the first run.
-
-```powershell
-.\mvnw.cmd spring-boot:run
-```
-
-On macOS/Linux: `./mvnw spring-boot:run`. Open <http://localhost:8080>.
-If Maven reports an invalid `JAVA_HOME`, point it at your JDK 25 installation.
-
-## Verify
-
-```powershell
-.\mvnw.cmd -B -ntp verify
-```
-
-The tests use the bundled inventory and do not call Azure.
-
-## What to show
-
-Open the catalog, filter for **Jackets** and **In stock only**, and find the same
-products in [inventory.json](src/main/resources/inventory.json).
-The [catalog service](src/main/java/com/contoso/store/catalog/CatalogService.java)
-is the single source of product facts for the page and JSON API.
-
-- `GET /api/products?category=Jackets&inStock=true`
-- `GET /api/products/JKT-003`
-
-Prices are USD. Inventory is read-only and packaged with the application.
-There is intentionally no checkout or persistent stock management.
-
-## Prepared phases
-
-Implementation is tracked in the [roadmap](https://github.com/roryp/spring-ai-webstore/issues/1).
-Each completed phase receives an immutable `stage-N` tag.
-Check out `stage-1` for the standalone version without cloud dependencies.
-This checkpoint adds Azure deployment without changing the catalog.
-
-See [Azure preparation](docs/azure.md) for `azd up`, protected GitHub deployment,
-warming the app before the event, pricing, and cleanup.
-
-Phase 3 adds **Ask Trail**, powered by Spring AI and Microsoft Foundry.
-The default local run remains offline and credential-free. See
-[inventory chat preparation](docs/assistant.md) for the live profile, workshop
-access, limits, and the three rehearsed questions.
-
-Phase 4 adds [OpenTelemetry and the prepared trace walkthrough](docs/observability.md).
-Raw chat content is not logged. The widget shows a real trace ID when tracing is
-active; Application Insights and Foundry provide the operator views.
+Every change starts as a GitHub issue and arrives in a pull request. On each pull request, the [build workflow](.github/workflows/ci.yml) builds and tests all four steps, and checks that the Azure templates and container images build. The tests use a fake AI model, so they never call Azure.

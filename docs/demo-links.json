@@ -1,8 +1,0 @@
-{
-  "repository": "https://github.com/roryp/spring-ai-webstore",
-  "local": "http://127.0.0.1:8080",
-  "backups": "http://127.0.0.1:8080/backups.html",
-  "phase2": "https://ca-trail-stage-2.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io",
-  "phase3": "https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io",
-  "phase4": "https://ca-trail-stage-4.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io"
-}
