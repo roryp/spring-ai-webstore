@@ -13,7 +13,7 @@ The store gets an assistant. It answers with the real prices and stock, because 
 | [ChatController.java](src/main/java/com/contoso/store/ChatController.java) | Handles `POST /ask`. It sends the question and the tool to the model, then shows the answer. |
 | [application.properties](src/main/resources/application.properties) | Points Spring AI at the model in Microsoft Foundry. Foundry serves the model through the OpenAI API, so the settings start with `spring.ai.openai`. |
 | [index.html](src/main/resources/templates/index.html) | Adds a question box and three example questions. |
-| [infra/app.bicep](infra/app.bicep) | Adds Microsoft Foundry, the `gpt-6-luna` model, and permission for the app's identity to use the model. |
+| [infra/app.bicep](infra/app.bicep) | Adds Microsoft Foundry, the `gpt-6-luna` model, and permission for the app's identity to use the model. It also gives the app 1 vCPU and 2 GiB of memory, because the AI library needs the extra CPU to get ready quickly. |
 
 ## How a question gets answered
 
@@ -51,7 +51,7 @@ azd up
 
 Use a new environment name, such as `trail-step3`. Pick a region where your subscription has quota for `gpt-6-luna` (Global Standard). We used Sweden Central.
 
-The app scales to zero when nobody's using it. The first question after a quiet spell can take up to a minute, while the app starts and signs in to Foundry. After that, answers take 3 to 4 seconds.
+The app scales to zero when nobody's using it. The first visit after a quiet spell takes about 30 seconds, while Azure starts the app. The first question then takes about 12 seconds, while the app signs in to Foundry and loads its AI library. After that, answers take about 3 seconds.
 
 ## Test it
 

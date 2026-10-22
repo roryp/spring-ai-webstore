@@ -82,7 +82,7 @@ azd up
 
 Use a new environment name, such as `trail-step4`. As in step 3, pick a region where your subscription has quota for `gpt-6-luna`.
 
-As in step 3, the first question after a quiet spell can take up to a minute while the app starts.
+As in step 3, the first visit after a quiet spell takes about 30 seconds while Azure starts the app, and the first question about 11 seconds. After that, answers take about 3 seconds.
 
 ## Test it
 
