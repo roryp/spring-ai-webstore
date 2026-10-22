@@ -1,0 +1,24 @@
+:root {
+    --cp-bg: #f7f4ef;
+    --cp-surface: #ffffff;
+    --cp-border: #dedede;
+    --cp-text: #242424;
+    --cp-text-muted: #5c5c5c;
+    --cp-accent: #b11f4b;
+    --cp-accent-fg: #ffffff;
+    --cp-danger: #dc2626;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font: 16px/1.5 "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+header, main { max-width: 960px; margin: 0 auto; padding: 24px; }
+header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--cp-border); }
+h1 { margin: 0; color: var(--cp-accent); }
+.step { margin: 0; padding: 4px 14px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); font-weight: 600; }
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+article { padding: 16px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
+article h2 { margin: 4px 0; font-size: 18px; }
+article p { margin: 4px 0; }
+.sku { color: var(--cp-text-muted); font-size: 13px; }
+.price { font-size: 22px; font-weight: 600; }
+.sold-out { color: var(--cp-danger); font-weight: 600; }

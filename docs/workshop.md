@@ -1,74 +1,71 @@
-# Follow the trail: 45-minute workshop
+# Workshop (45 minutes)
 
-**You need a browser. You do not need an Azure subscription, Docker, or a local JDK.**
-Your presenter supplies a workshop access code for AI questions. This is a guided
-walkthrough of prepared checkpoints, not a from-scratch deployment lab.
+You only need a browser. You read the code on GitHub and try the live apps. Deploying your own copy is optional homework.
 
-## 0-4 minutes: open the starting points
+Your presenter shares the links to the live apps. They look like `https://ca-....azurecontainerapps.io`.
 
-Open this guide and the [repository](https://github.com/roryp/spring-ai-webstore).
-Keep the [recorded captures](media) available if a shared service is busy.
+## 1. The plan (3 minutes)
 
-## 4-11 minutes: it works locally
+Read the table in the [README](../README.md). Each step is a folder, and each adds one idea to the step before it. If a word is new to you, see [Words you'll meet](../README.md#words-youll-meet).
 
-Watch the presenter open the local app.
-Read the [phase-1 inventory](https://github.com/roryp/spring-ai-webstore/blob/stage-1/src/main/resources/inventory.json)
-and [catalog service](https://github.com/roryp/spring-ai-webstore/blob/stage-1/src/main/java/com/contoso/store/catalog/CatalogService.java).
+## 2. Step 1: a plain app (7 minutes)
 
-**Try:** find the price and stock count for JKT-003. Why should we not recommend it as available?
+Open [step-1-local](../step-1-local), and read [Product.java](../step-1-local/src/main/java/com/contoso/store/Product.java), [Catalog.java](../step-1-local/src/main/java/com/contoso/store/Catalog.java), and [StoreController.java](../step-1-local/src/main/java/com/contoso/store/StoreController.java).
 
-## 11-20 minutes: the same app on Azure
+- **Find:** How many products are there? Which one is out of stock?
 
-Open the [Azure catalog](https://ca-trail-stage-2.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io).
-Select **Jackets** and **In stock only**. There should be two results.
+## 3. Step 2: on Azure (10 minutes)
 
-Read [azure.yaml](https://github.com/roryp/spring-ai-webstore/blob/stage-2/azure.yaml)
-and the [completed deployment PR](https://github.com/roryp/spring-ai-webstore/pull/8).
-The presenter shows the successful GitHub workflow, not a deployment running live.
+Open [step-2-azure](../step-2-azure), and read its [README](../step-2-azure/README.md), [Dockerfile](../step-2-azure/Dockerfile), and [app.bicep](../step-2-azure/infra/app.bicep). Then open the live step 2 app.
 
-**Find:** the application is packaged in a container; Bicep describes its resources;
-the app identity pulls its image. The inventory code has not become more complicated.
+- **Find:** Which line in `app.bicep` lets the app scale to zero?
+- **Find:** How does the app pull its image without a password?
 
-## 20-32 minutes: ask the inventory
+## 4. Step 3: an AI assistant (12 minutes)
 
-Open the [AI catalog](https://ca-trail-stage-3.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io).
-Click **Ask Trail**, open **Workshop access**, and enter the supplied code.
-Click the first suggested question, then **Ask the inventory**.
+Open [step-3-ai](../step-3-ai), and read [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java) and [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java). Then open the live step 3 app, and select one example question.
 
-Expected facts: JKT-001 costs $99 and has 12 in stock; JKT-002 costs $139 and has 4.
-Try the JKT-003 alternative question next.
+Now ask one question of your own. Pick one of these, or write your own:
 
-Read the two methods in [InventoryTools](https://github.com/roryp/spring-ai-webstore/blob/stage-3/src/main/java/com/contoso/store/assistant/InventoryTools.java).
-Both use the same catalog as the product page. An unavailable product's lookup
-includes verified in-stock alternatives.
+1. "Do you sell kayaks?"
+2. "What's the cheapest thing in stock?"
+3. "Write me a poem about the weather."
 
-**Important:** each question is independent. There is no checkout or chat memory.
-Shared demos admit two simultaneous questions. Work in pairs or stagger requests.
-If busy, use the [real recorded answers](media/stage-3-answers.json); you can finish
-the exercise without making another paid request.
+The whole room shares one model. If you see "could not answer right now", wait a few seconds and try again.
 
-## 32-40 minutes: see what happened
+- **Find:** Where does the app get permission to use the model? Is there an API key anywhere?
 
-Open the [observable AI app](https://ca-trail-stage-4.proudocean-b53ddbc9.swedencentral.azurecontainerapps.io).
-Enter the same workshop code and ask one question. Notice the trace ID below the answer.
+## 5. Step 4: see inside (8 minutes)
 
-Follow the presenter's **already-ingested** Application Insights trace:
-HTTP request, assistant, model call, inventory tool, then another model call.
-The Foundry view attributes those spans to the registered external assistant.
+Open [step-4-observe](../step-4-observe), and read its [README](../step-4-observe/README.md). Your presenter shows the traces in Application Insights.
 
-**Find:** why can one question cost more than one model call?
-The [token query](kql/tokens.kql) counts model spans only. Raw prompts and access
-codes are not logged. Token-based estimates are not the Azure bill.
+- **Find:** How many times does the app call the model for a question about the products? Why?
+- **Find:** About how much does one question cost?
 
-No portal access is required for attendees; use the sanitized captures supplied
-by the presenter.
+## 6. Wrap-up and questions (5 minutes)
 
-## 40-45 minutes: recap
+Ask your presenter anything. To try it on your own Azure subscription, see the homework below.
 
-Explain the four changes to a partner: local, Azure, AI, observe.
-Keep the [tagged releases](https://github.com/roryp/spring-ai-webstore/releases)
-for later exploration.
+## Answers
 
-**Optional after the workshop:** install JDK 25, clone a checkpoint, and follow
-the README to run locally. Deploying into your own Azure subscription is a separate
-exercise with billable resources, not part of today's 45-minute completion criteria.
+<details>
+<summary>Show the answers</summary>
+
+1. There are six products. The Summit Waterproof Jacket is out of stock: its stock is `0` in `Catalog.java`.
+2. `scale: { minReplicas: 0, maxReplicas: 1 }` lets the app scale to zero. The app pulls its image with its managed identity, which has the `AcrPull` role on the registry. That's the `canPullImages` resource.
+3. The `canUseModel` resource in `app.bicep` gives the app's managed identity the **Foundry User** role. There's no API key: `disableLocalAuth: true` switches keys off.
+4. Twice. In the first call, the model asks for the `listProducts` tool. In the second call, it writes the answer from the tool's result. For an off-topic question, like the poem, the model usually answers in one call, because it doesn't need the tool.
+5. About $0.00008, or about 8 cents for 1,000 questions.
+
+</details>
+
+## Homework: deploy your own
+
+You need an Azure subscription where you can create resources and assign roles, and the [Azure Developer CLI](https://aka.ms/azd-install). In any step folder from 2 to 4, run:
+
+```bash
+azd auth login
+azd up
+```
+
+When you're done, run `azd down --purge` in the same folder to delete everything.

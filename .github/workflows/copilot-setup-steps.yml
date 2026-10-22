@@ -15,4 +15,8 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
-      - run: ./mvnw -B -ntp dependency:go-offline
+      - name: Download dependencies for every step
+        run: |
+          for step in step-*/; do
+            (cd "$step" && ./mvnw -B -ntp dependency:go-offline)
+          done
