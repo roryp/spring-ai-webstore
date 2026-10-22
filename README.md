@@ -4,6 +4,8 @@ Take a Java app from "runs on my laptop" to "runs on Azure, with an AI assistant
 
 Each step is a complete Spring Boot app in its own folder, and each adds one idea to the step before it.
 
+![Diagram of the four steps: 1, run it on your laptop; 2, ship it to Azure with azd up; 3, add an AI assistant with Microsoft Foundry; 4, see inside with OpenTelemetry.](docs/diagrams/journey.png)
+
 | Step | Folder | The one new idea | Runs |
 |---|---|---|---|
 | 1 | [step-1-local](step-1-local) | A plain Spring Boot store with six products | On your laptop |
@@ -85,3 +87,5 @@ This deletes the resource group and everything in it.
 ## How this repo is built
 
 Every change starts as a GitHub issue and arrives in a pull request. On each pull request, the [build workflow](.github/workflows/ci.yml) builds and tests all four steps, and checks that the Azure templates and container images build. The tests use a fake AI model, so they never call Azure.
+
+The diagrams are [Excalidraw](https://github.com/excalidraw/excalidraw) drawings in [docs/diagrams](docs/diagrams). To change one, open its `.excalidraw` file in Excalidraw, edit it, and export it as a PNG with the same name.

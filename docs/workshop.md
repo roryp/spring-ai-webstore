@@ -6,24 +6,32 @@ Your presenter shares the links to the live apps. They look like `https://ca-...
 
 ## 1. The plan (3 minutes)
 
-Read the table in the [README](../README.md). Each step is a folder, and each adds one idea to the step before it. If a word is new to you, see [Words you'll meet](../README.md#words-youll-meet).
+Look at the four steps below. Each step is a folder, and each adds one idea to the step before it. If a word is new to you, see [Words you'll meet](../README.md#words-youll-meet).
+
+![The four steps: run it, ship it, add AI, see inside it.](diagrams/journey.png)
 
 ## 2. Step 1: a plain app (7 minutes)
 
-Open [step-1-local](../step-1-local), and read [Product.java](../step-1-local/src/main/java/com/contoso/store/Product.java), [Catalog.java](../step-1-local/src/main/java/com/contoso/store/Catalog.java), and [StoreController.java](../step-1-local/src/main/java/com/contoso/store/StoreController.java).
+Start with the diagram, and follow the numbers. Then open [step-1-local](../step-1-local), and read [Product.java](../step-1-local/src/main/java/com/contoso/store/Product.java), [Catalog.java](../step-1-local/src/main/java/com/contoso/store/Catalog.java), and [StoreController.java](../step-1-local/src/main/java/com/contoso/store/StoreController.java).
+
+![How step 1 works: the browser asks StoreController for the page, StoreController gets the products from Catalog and fills in index.html.](diagrams/step-1-local.png)
 
 - **Find:** How many products are there? Which one is out of stock?
 
 ## 3. Step 2: on Azure (10 minutes)
 
-Open [step-2-azure](../step-2-azure), and read its [README](../step-2-azure/README.md), [Dockerfile](../step-2-azure/Dockerfile), and [app.bicep](../step-2-azure/infra/app.bicep). Then open the live step 2 app.
+Start with the diagram. Then open [step-2-azure](../step-2-azure), and read its [README](../step-2-azure/README.md), [Dockerfile](../step-2-azure/Dockerfile), and [app.bicep](../step-2-azure/infra/app.bicep). Then open the live step 2 app.
+
+![What azd up does: it creates a registry, a managed identity and a container app, builds the image in Azure, and deploys it.](diagrams/step-2-azure.png)
 
 - **Find:** Which line in `app.bicep` lets the app scale to zero?
 - **Find:** How does the app pull its image without a password?
 
 ## 4. Step 3: an AI assistant (12 minutes)
 
-Open [step-3-ai](../step-3-ai), and read [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java) and [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java). Then open the live step 3 app, and select one example question.
+Start with the diagram, and follow the numbers. Then open [step-3-ai](../step-3-ai), and read [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java) and [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java). Then open the live step 3 app, and select one example question.
+
+![How a question gets answered: two calls to the model, with one call to the listProducts Java method in between.](diagrams/step-3-ai.png)
 
 Now ask one question of your own. Pick one of these, or write your own:
 
@@ -37,7 +45,9 @@ The whole room shares one model. If you see "could not answer right now", wait a
 
 ## 5. Step 4: see inside (8 minutes)
 
-Open [step-4-observe](../step-4-observe), and read its [README](../step-4-observe/README.md). Your presenter shows the traces in Application Insights.
+Open [step-4-observe](../step-4-observe), and read its [README](../step-4-observe/README.md). Your presenter shows the traces in Application Insights. This is what one real question looked like:
+
+![One question as a trace: a model call, a 1-millisecond tool call, and a second model call, with their token counts and cost.](diagrams/step-4-trace.png)
 
 - **Find:** How many times does the app call the model for a question about the products? Why?
 - **Find:** About how much does one question cost?

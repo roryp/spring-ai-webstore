@@ -17,10 +17,15 @@ The store gets an assistant. It answers with the real prices and stock, because 
 
 ## How a question gets answered
 
-1. You ask, "Is the Summit Waterproof Jacket in stock?"
-2. Spring AI sends your question to the model and tells it that a `listProducts` tool exists.
-3. The model asks for `listProducts`. Spring AI runs the Java method and sends the products back.
-4. The model answers from those facts: the Summit jacket is out of stock, but two other jackets are in stock.
+![Sequence diagram with eight numbered arrows between you, the app, the listProducts tool and the model, as described in the list below.](../docs/diagrams/step-3-ai.png)
+
+Follow the numbers in the diagram:
+
+- **1:** You ask, "Is the Summit Waterproof Jacket in stock?"
+- **2:** Spring AI sends your question to the model, and tells it that a `listProducts` tool exists.
+- **3 to 5:** The model asks for `listProducts`. Spring AI runs the Java method and gets the six products.
+- **6 and 7:** Spring AI sends the products to the model, and the model answers from those facts: the Summit jacket is out of stock, but two other jackets are in stock.
+- **8:** The answer appears on the page.
 
 So a question about the products usually means two calls to the model. The model decides whether it needs the tool. For an off-topic question, such as "Write me a poem", it usually declines in one call, without the tool.
 

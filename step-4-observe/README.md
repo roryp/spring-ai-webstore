@@ -16,9 +16,13 @@ The app's code doesn't change. Three small changes turn on tracing:
 
 The app itself doesn't say where to send traces. On Azure, Container Apps sets the standard `OTEL_EXPORTER_OTLP_*` environment variables, and Spring Boot reads them. On your laptop they aren't set, so nothing is sent.
 
+![Diagram: the app, with OpenTelemetry, sends traces to the Container Apps environment, which forwards them to Application Insights. There you can query tokens and cost with KQL, or open one question as a timeline in Search.](../docs/diagrams/step-4-pipeline.png)
+
 There's also one new test in [StoreApplicationTests.java](src/test/java/com/contoso/store/StoreApplicationTests.java). It checks that asking a question creates one trace that contains the web request and the Spring AI call. To keep the spans in memory, it uses `opentelemetry-sdk-testing`, a test-only dependency.
 
 ## What one question looks like
+
+![Timeline of one real question: the 3.5-second web request contains a 1.5-second model call, a 1-millisecond tool call and a 1.9-second model call. Together they use 549 input and 52 output tokens, which cost $0.000081.](../docs/diagrams/step-4-trace.png)
 
 | Span | What it is |
 |---|---|

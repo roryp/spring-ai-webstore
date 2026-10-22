@@ -4,6 +4,12 @@ This is where many apps start: one Spring Boot app that runs on a developer's la
 
 ![The store running on a laptop](../docs/screenshots/step-1.png)
 
+## How it works
+
+Follow the numbers.
+
+![Diagram: the browser sends GET / to StoreController, which gets the six products from Catalog, fills in index.html, and sends the HTML page back to the browser.](../docs/diagrams/step-1-local.png)
+
 ## What's inside
 
 | File | What it does |
