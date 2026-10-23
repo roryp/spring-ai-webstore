@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>com.contoso</groupId>
-    <artifactId>trail-store</artifactId>
+    <artifactId>trail-store-step-1-local</artifactId>
     <version>1.0.0</version>
-    <name>Trail Store</name>
+    <name>Trail Store - Step 1: Local</name>
     <properties>
         <java.version>25</java.version>
     </properties>

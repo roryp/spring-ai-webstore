@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>com.contoso</groupId>
-    <artifactId>trail-store</artifactId>
+    <artifactId>trail-store-step-4-observe</artifactId>
     <version>1.0.0</version>
-    <name>Trail Store</name>
+    <name>Trail Store - Step 4: Observe</name>
     <properties>
         <java.version>25</java.version>
         <spring-ai.version>2.0.1</spring-ai.version>

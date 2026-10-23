@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>com.contoso</groupId>
-    <artifactId>trail-store</artifactId>
+    <artifactId>trail-store-step-2-azure</artifactId>
     <version>1.0.0</version>
-    <name>Trail Store</name>
+    <name>Trail Store - Step 2: Azure</name>
     <properties>
         <java.version>25</java.version>
     </properties>
