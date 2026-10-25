@@ -43,7 +43,7 @@ The whole room shares one model. If you see "could not answer right now", wait a
 
 - **Find:** Where does the app get permission to use the model? Is there an API key anywhere?
 
-To finish step 3, your presenter shows one slide on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). In step 3, the model gets one Java tool to answer one question. The Copilot SDK goes further: it runs GitHub Copilot's agent inside your own app. You give it a goal, and it plans and calls your Java tools, step by step, until the job is done. If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk), and read [Assistant.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/Assistant.java): it's the same store and the same tool, built with the SDK.
+To finish step 3, your presenter shows one slide on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk): it's the same assistant, built with the SDK.
 
 ## 5. Step 4: see inside (8 minutes)
 

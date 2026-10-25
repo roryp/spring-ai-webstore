@@ -13,7 +13,7 @@ Each step is a complete Spring Boot app in its own folder, and each adds one ide
 | 3 | [step-3-ai](step-3-ai) | An AI assistant, using Microsoft Foundry, that reads the real stock | On Azure |
 | 4 | [step-4-observe](step-4-observe) | OpenTelemetry: see each request, AI call, token count, and cost | On Azure |
 
-**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk) is a bonus version of step 3. It builds the same assistant with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk), which runs Copilot's agent inside the app.
+**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk) is a bonus version of step 3: the same assistant, built with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk).
 
 ![The store at step 4](docs/screenshots/step-4.png)
 
@@ -31,7 +31,6 @@ Java developers who are new to Azure, containers, or AI. You need to know a litt
 - **Managed identity**: an identity that Azure gives your app, so it can use other Azure services without passwords or keys.
 - **Token**: a small piece of text, roughly three-quarters of a word. AI models are priced per token.
 - **Tool**: a method in your code that the AI model can ask to run, to get facts it doesn't have.
-- **Agent**: an AI that works in a loop. It calls tools, one after another, until the job is done.
 - **Trace** and **span**: a trace is the timeline of one request. Each timed step inside it, such as one call to the model, is a span.
 
 ## Try it yourself
@@ -60,9 +59,9 @@ azd auth login
 azd up
 ```
 
-For steps 3 and 4, run `azd up` in `step-3-ai` or `step-4-observe` instead, or in `step-3-copilot-sdk` for the bonus. `azd up` asks for an environment name (for example, `trail-step2`), a subscription, and a region. After about 5 minutes, it prints the app's URL. Each step deploys into its own resource group, `rg-<environment name>`.
+For steps 3 and 4, run `azd up` in `step-3-ai` or `step-4-observe` instead. `azd up` asks for an environment name (for example, `trail-step2`), a subscription, and a region. After about 5 minutes, it prints the app's URL. Each step deploys into its own resource group, `rg-<environment name>`.
 
-Steps 3 and 4, and the bonus, deploy the `gpt-6-luna` model, so pick a region where your subscription has quota for it. We used Sweden Central.
+Steps 3 and 4 deploy the `gpt-6-luna` model, so pick a region where your subscription has quota for it. We used Sweden Central.
 
 ## What it costs
 
