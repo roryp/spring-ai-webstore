@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.1</version>
+        <relativePath/>
+    </parent>
+    <groupId>com.contoso</groupId>
+    <artifactId>trail-store-step-3-copilot-sdk</artifactId>
+    <version>1.0.0</version>
+    <name>Trail Store - Step 3: Copilot SDK</name>
+    <properties>
+        <java.version>25</java.version>
+        <copilot-sdk.version>1.0.27-preview.3</copilot-sdk.version>
+        <!-- The Copilot SDK is built with a newer Jackson 2 than Spring Boot picks by default. -->
+        <jackson-2-bom.version>2.22.3</jackson-2-bom.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.github</groupId>
+            <artifactId>copilot-sdk-java</artifactId>
+            <version>${copilot-sdk.version}</version>
+        </dependency>
+        <!-- Copilot's agent runtime for Linux, which is where the app runs on Azure. -->
+        <dependency>
+            <groupId>com.github</groupId>
+            <artifactId>copilot-sdk-java-runtime</artifactId>
+            <version>${copilot-sdk.version}</version>
+            <classifier>linux-x64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-identity</artifactId>
+            <version>1.18.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Run the SDK's annotation processor, which turns @CopilotTool methods into tools. -->
+                    <proc>full</proc>
+                    <compilerArgs>
+                        <!-- The Java SDK is in preview: @CopilotTool and managed identity sign-in are still experimental. -->
+                        <arg>-Acopilot.experimental.allowed=true</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

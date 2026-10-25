@@ -11,6 +11,7 @@ For the 45-minute workshop, you can also present [the slides](trail-store-worksh
 | 1 | <http://localhost:8080> (start it before the event) | [step-1-local](../step-1-local) |
 | 2 | <https://ca-4scup3zlsthac.calmocean-83820dbb.swedencentral.azurecontainerapps.io> | [step-2-azure](../step-2-azure) |
 | 3 | <https://ca-tst5kvf5kukdg.greenpebble-85b82203.swedencentral.azurecontainerapps.io> | [step-3-ai](../step-3-ai) |
+| 3, bonus | <https://ca-mz7m4ugxvje6y.calmmoss-0b015d05.swedencentral.azurecontainerapps.io> | [step-3-copilot-sdk](../step-3-copilot-sdk) |
 | 4 | <https://ca-n4b4dfoneyxru.ashypebble-55a62ce4.swedencentral.azurecontainerapps.io> | [step-4-observe](../step-4-observe) |
 
 Step 4's traces are in the Application Insights resource `appi-n4b4dfoneyxru`, in the resource group `rg-trail-step4`.
@@ -33,18 +34,19 @@ The day before:
   ```powershell
   az containerapp update -g rg-trail-step2 -n ca-4scup3zlsthac --min-replicas 1
   az containerapp update -g rg-trail-step3 -n ca-tst5kvf5kukdg --min-replicas 1
+  az containerapp update -g rg-trail-step3-copilot -n ca-mz7m4ugxvje6y --min-replicas 1
   az containerapp update -g rg-trail-step4 -n ca-n4b4dfoneyxru --min-replicas 1
   ```
 
 - [ ] In `step-1-local`, run `.\mvnw.cmd spring-boot:run` and leave the terminal open.
-- [ ] Open the four app links. In steps 3 and 4, select **Summit jacket in stock?** once. The first answer after a restart takes about 12 seconds; after that, answers take about 3 seconds. Your step 4 warm-up question also gives the saved query something to show.
-- [ ] Open these tabs: this repo on GitHub, the four apps, Application Insights **Logs**, and the transaction diagnostics of your warm-up question.
+- [ ] Open the app links. In steps 3 and 4, and the step 3 bonus, select **Summit jacket in stock?** once. The first answer after a restart takes about 12 seconds; after that, answers take about 3 seconds. Your step 4 warm-up question also gives the saved query something to show.
+- [ ] Open these tabs: this repo on GitHub, the apps, Application Insights **Logs**, and the transaction diagnostics of your warm-up question.
 
-After the event, run the same three commands with `--min-replicas 0`, or delete everything as described in [Clean up](../README.md#clean-up).
+After the event, run the same commands with `--min-replicas 0`, or delete everything as described in [Clean up](../README.md#clean-up).
 
 ## Run of show
 
-The script takes 50 minutes. That leaves 10 minutes for questions, or for anything that goes wrong.
+The script takes 52 minutes. That leaves 8 minutes for questions, or for anything that goes wrong.
 
 ### 0:00 · Introduction (3 minutes)
 
@@ -69,11 +71,11 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "The Java code didn't change. We added a Dockerfile to pack the app, `azure.yaml` to name it, and Bicep to describe the Azure resources."
   - "One command, `azd up`, created all of this in about 5 minutes."
   - "The app pulls its image with its managed identity, so there's no password. It scales to zero, so it costs nothing when nobody's using it."
-- **Optional:** in GitHub, open **Actions**. "Every pull request builds and tests all four steps."
+- **Optional:** in GitHub, open **Actions**. "Every pull request builds and tests every step."
 
 ![What azd up does](diagrams/step-2-azure.png)
 
-### 0:20 · Step 3: an AI assistant (13 minutes)
+### 0:20 · Step 3: an AI assistant (15 minutes)
 
 - **Show:** the diagram in the [step 3 README](../step-3-ai/README.md#how-a-question-gets-answered). "Follow the numbers: two calls to the model, and one call to our own Java code in between."
 - **Click:** [InventoryTools.java](../step-3-ai/src/main/java/com/contoso/store/InventoryTools.java), [ChatController.java](../step-3-ai/src/main/java/com/contoso/store/ChatController.java), [application.properties](../step-3-ai/src/main/resources/application.properties), the Foundry part of [app.bicep](../step-3-ai/infra/app.bicep). Then, in the step 3 tab, select the three example questions.
@@ -83,10 +85,15 @@ The script takes 50 minutes. That leaves 10 minutes for questions, or for anythi
   - "The Summit jacket is out of stock, and the assistant says so, then suggests jackets that are in stock. It uses real facts, not guesses."
   - "Guardrails keep the cost down: 300 characters in, 300 tokens out, and at most 30 requests a minute."
 - **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
+- **Then:** show the slide on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk) (2 minutes), and say:
+  - "Step 3 gives the model one Java tool to answer one question. The Copilot SDK goes further: it runs Copilot's agent inside your own app."
+  - "You give it a goal, and it plans and calls your Java tools, step by step, until the job is done. You still write the tools in Java, with `@CopilotTool` instead of `@Tool`."
+  - "The bonus folder, `step-3-copilot-sdk`, builds this same assistant with the SDK. Its Java releases are still labeled preview."
+- **Optional:** click [Assistant.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/Assistant.java), then select **Summit jacket in stock?** in the step 3 bonus tab. "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our one tool, and nothing else."
 
 ![How a question gets answered](diagrams/step-3-ai.png)
 
-### 0:33 · Step 4: see inside (12 minutes)
+### 0:35 · Step 4: see inside (12 minutes)
 
 - **First:** in the step 4 tab, select **Summit jacket in stock?** Its trace takes one to three minutes to reach Application Insights, so ask now and show the code while you wait.
 - **Show:** the first diagram in the [step 4 README](../step-4-observe/README.md#whats-new): how traces get to Application Insights.
@@ -104,12 +111,12 @@ If the portal is slow, show this diagram of a real trace instead. It's in the st
 
 ![One question, as a trace](diagrams/step-4-trace.png)
 
-### 0:45 · Wrap-up (5 minutes)
+### 0:47 · Wrap-up (5 minutes)
 
 - **Show:** the four-step diagram again.
 - **Say:** "Run it, ship it, add AI, see inside it. To try it yourself, run `azd up` in any step folder, and `azd down --purge` when you're done."
 
-### 0:50 · Questions (10 minutes)
+### 0:52 · Questions (8 minutes)
 
 ## If something goes wrong
 
