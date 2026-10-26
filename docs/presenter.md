@@ -96,9 +96,8 @@ The script takes 52 minutes. That leaves 8 minutes for questions, or for anythin
 
 - **First:** in the step 4 tab, select **Summit jacket in stock?** Its trace takes one to three minutes to reach Application Insights, so ask now and show the code while you wait.
 - **Show:** the first diagram in the [step 4 README](../step-4-observe/README.md#whats-new): how traces get to Application Insights.
-- **Click:** [pom.xml](../step-4-observe/pom.xml) (one dependency), [application.properties](../step-4-observe/src/main/resources/application.properties) (three lines), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
+- **Click:** [pom.xml](../step-4-observe/pom.xml), [application.properties](../step-4-observe/src/main/resources/application.properties), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
 - **Say:**
-  - "The app's code didn't change: one dependency, three settings, and Application Insights in Bicep."
   - "A question about the products is two model calls and one tool call. Here are the tokens, and here's the cost: less than a hundredth of a cent."
   - "The traces show timings and token counts, but not what people asked."
   - "Seeing what your app does, and what it costs, is a big step toward running it in production."
