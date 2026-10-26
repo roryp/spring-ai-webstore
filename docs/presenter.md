@@ -109,6 +109,8 @@ If the portal is slow, show this diagram of a real trace instead. It's in the st
 
 ![One question, as a trace](diagrams/step-4-trace.png)
 
+To show the same trace live, ask GitHub Copilot in VS Code to open the **Trail Store trace** canvas, and select **Replay the request**: the spans grow at real speed, then the trace travels to Application Insights. The canvas is in [.github/extensions/trace-explorer](../.github/extensions/trace-explorer).
+
 ### 0:47 · Wrap-up (5 minutes)
 
 - **Show:** the four-step diagram again.

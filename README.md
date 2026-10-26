@@ -91,3 +91,5 @@ This deletes the resource group and everything in it.
 Every change starts as a GitHub issue and arrives in a pull request. On each pull request, the [build workflow](.github/workflows/ci.yml) builds and tests every step, and checks that the Azure templates and container images build. The tests use a fake AI model or a fake assistant, so they never call Azure.
 
 The diagrams are [Excalidraw](https://github.com/excalidraw/excalidraw) drawings in [docs/diagrams](docs/diagrams). To change one, open its `.excalidraw` file in Excalidraw, edit it, and export it as a PNG with the same name.
+
+The **Trail Store trace** canvas in [.github/extensions/trace-explorer](.github/extensions/trace-explorer) shows one step 4 question as a trace, and replays it. To open it, ask GitHub Copilot in VS Code to open the Trail Store trace canvas. To test it, run `node --test .github/extensions/trace-explorer/test/`.

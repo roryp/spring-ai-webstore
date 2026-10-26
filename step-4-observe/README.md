@@ -37,6 +37,8 @@ That's a question about the products. For an off-topic question, the model usual
 
 The traces record timings, the model name, token counts, and tool names. They don't record the question or the answer.
 
+To replay this trace live, open the repo in VS Code and ask GitHub Copilot to open the **Trail Store trace** canvas. It's in [.github/extensions/trace-explorer](../.github/extensions/trace-explorer).
+
 ## See it in Azure
 
 1. Ask the assistant a question.

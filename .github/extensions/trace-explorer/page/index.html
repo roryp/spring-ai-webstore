@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>One question, as a trace · Trail Store</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <header class="top">
+        <div>
+            <p class="eyebrow">Step 4 · See inside every answer</p>
+            <h1>One question, as a trace</h1>
+        </div>
+        <p class="pill" id="source">Loading…</p>
+    </header>
+
+    <main>
+        <p class="lead">
+            With OpenTelemetry, every request leaves a <strong>trace</strong>: a timeline of everything the app did to
+            answer it. Each timed step in a trace is a <strong>span</strong>, such as the web request, a call to the
+            model, or a tool call. Container Apps sends the traces to Application Insights.
+        </p>
+
+        <section class="card" aria-labelledby="trace-title">
+            <div class="card-head">
+                <div>
+                    <h2 id="trace-title">Loading the trace…</h2>
+                    <p class="muted" id="trace-meta"></p>
+                </div>
+                <div class="controls">
+                    <span class="clock" id="clock" aria-hidden="true"></span>
+                    <button type="button" id="replay" disabled>Replay the request</button>
+                </div>
+            </div>
+            <p class="muted small" id="trace-note" hidden></p>
+
+            <ul class="legend" aria-label="Kinds of span">
+                <li data-category="request">web request</li>
+                <li data-category="model">model call</li>
+                <li data-category="tool">tool call</li>
+                <li data-category="other">other step</li>
+            </ul>
+
+            <div class="timeline" id="timeline">
+                <ol class="spans" id="spans" aria-label="Spans in this trace. Select one to see its details."></ol>
+                <div class="axis-row" aria-hidden="true">
+                    <span></span>
+                    <div class="axis" id="axis"></div>
+                </div>
+            </div>
+
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+        </section>
+
+        <div class="columns">
+            <section class="card" aria-labelledby="detail-title">
+                <p class="eyebrow">Selected span</p>
+                <h2 id="detail-title">None yet</h2>
+                <p id="detail-description">Select a span in the timeline to see what it records.</p>
+                <dl class="facts" id="detail-facts"></dl>
+                <div id="detail-attributes" hidden>
+                    <h3>Attributes</h3>
+                    <table class="attributes">
+                        <caption class="visually-hidden">Attributes recorded on the selected span</caption>
+                        <thead>
+                            <tr><th scope="col">Name</th><th scope="col">Value</th></tr>
+                        </thead>
+                        <tbody id="attributes"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card" aria-labelledby="totals-title">
+                <p class="eyebrow">Whole trace</p>
+                <h2 id="totals-title">This request</h2>
+                <dl class="facts" id="totals"></dl>
+            </section>
+        </div>
+
+        <section class="card" aria-labelledby="pipeline-title">
+            <h2 id="pipeline-title">Where the trace goes</h2>
+            <ol class="hops">
+                <li class="hop" data-hop="app">
+                    <strong>Your app</strong>
+                    <span>with OpenTelemetry</span>
+                </li>
+                <li class="hop" data-hop="aca">
+                    <strong>Container Apps environment</strong>
+                    <span>forwards the traces</span>
+                </li>
+                <li class="hop" data-hop="appi">
+                    <strong>Application Insights</strong>
+                    <span>stores them. Query tokens and cost with KQL in Logs, or open one question as a timeline in Search.</span>
+                </li>
+            </ol>
+            <div class="notes">
+                <p class="note">
+                    The app doesn't say where traces go. On Azure, Container Apps sets the standard
+                    <code>OTEL_EXPORTER_OTLP_*</code> settings, and Spring Boot reads them. On your laptop, nothing is sent.
+                </p>
+                <p class="note">Traces keep timings, the model name, token counts and tool names. Not the questions, and not the answers.</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
