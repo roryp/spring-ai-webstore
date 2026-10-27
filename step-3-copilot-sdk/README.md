@@ -21,12 +21,16 @@ The Azure resources in [infra/app.bicep](infra/app.bicep) are the same as in ste
 
 ## How a question gets answered
 
-1. You ask, "Is the Summit Waterproof Jacket in stock?"
-2. `Assistant` opens a new Copilot session and sends your question. The first question also starts Copilot's agent runtime, which runs next to the app, in the same container.
-3. The agent sends your question to the model in Foundry, and tells it that a `list_products` tool exists.
-4. The model asks for `list_products`. The SDK runs your Java method, which reads the catalog.
-5. The agent sends the products to the model, and the model answers from those facts.
-6. `Assistant` deletes the session, and the answer appears on the page.
+![Sequence diagram with ten numbered arrows between you, the app, Copilot's agent, the listProducts tool and the model, as described in the list below.](../docs/diagrams/step-3-copilot-sdk.png)
+
+Follow the numbers in the diagram:
+
+- **1:** You ask, "Is the Summit Waterproof Jacket in stock?"
+- **2:** `Assistant` opens a new Copilot session and sends your question. The first question also starts Copilot's agent runtime, which runs next to the app, in the same container.
+- **3:** The agent sends your question to the model in Foundry, and tells it that a `list_products` tool exists.
+- **4 to 6:** The model asks for `list_products`. The SDK runs your Java method, which reads the catalog.
+- **7 and 8:** The agent sends the products to the model, and the model answers from those facts.
+- **9 and 10:** The agent hands back the answer. `Assistant` deletes the session, and the answer appears on the page.
 
 As in step 3, a question about the products takes two calls to the model, and an off-topic question usually takes one. With more tools, the agent would keep going: it can call several tools, one after another, until the job is done.
 

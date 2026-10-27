@@ -43,7 +43,7 @@ The whole room shares one model. If you see "could not answer right now", wait a
 
 - **Find:** Where does the app get permission to use the model? Is there an API key anywhere?
 
-To finish step 3, your presenter shows one slide on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk): it's the same assistant, built with the SDK.
+To finish step 3, your presenter shows two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk): it's the same assistant, built with the SDK.
 
 ## 5. Step 4: see inside (8 minutes)
 

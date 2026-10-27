@@ -85,7 +85,7 @@ The script takes 52 minutes. That leaves 8 minutes for questions, or for anythin
   - "The Summit jacket is out of stock, and the assistant says so, then suggests jackets that are in stock. It uses real facts, not guesses."
   - "Guardrails keep the cost down: 300 characters in, 300 tokens out, and at most 30 requests a minute."
 - **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
-- **Then:** show the slide on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk) (2 minutes), and say:
+- **Then:** show the two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk) (2 minutes), and say:
   - "The Copilot SDK runs Copilot's agent inside your own app. You give it a goal, and it plans and calls your Java tools, step by step, until the job is done."
   - "The bonus folder, `step-3-copilot-sdk`, builds this same assistant with the SDK. Its Java releases are still labeled preview."
 - **Optional:** click [Assistant.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/Assistant.java), then select **Summit jacket in stock?** in the step 3 bonus tab. "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our one tool, and nothing else."
