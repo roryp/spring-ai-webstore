@@ -77,7 +77,7 @@ The tests don't need Azure, because they use a fake assistant, so they never sta
 
 ## Cost
 
-About the same as step 3. A question about the products uses about 430 input and 100 output tokens, so it costs about $0.0001, or about 10 cents for 1,000 questions. The container registry costs about $0.17 a day. For the details, see [What it costs](../README.md#what-it-costs).
+About the same as step 3. A question about the products uses about 430 input and 100 output tokens, so it costs about \$0.0001, or about 10 cents for 1,000 questions. The container registry costs about \$0.17 a day. For the details, see [What it costs](../README.md#what-it-costs).
 
 ## Clean up
 

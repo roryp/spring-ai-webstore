@@ -22,7 +22,7 @@ There's also one new test in [StoreApplicationTests.java](src/test/java/com/cont
 
 ## What one question looks like
 
-![Timeline of one real question: the 3.5-second web request contains a 1.5-second model call, a 1-millisecond tool call and a 1.9-second model call. Together they use 549 input and 52 output tokens, which cost $0.000081.](../docs/diagrams/step-4-trace.png)
+![Timeline of one real question: the 3.5-second web request contains a 1.5-second model call, a 1-millisecond tool call and a 1.9-second model call. Together they use 549 input and 52 output tokens, which cost \$0.000081.](../docs/diagrams/step-4-trace.png)
 
 | Span | What it is |
 |---|---|
@@ -64,9 +64,9 @@ Here's what the query returned for our test questions on 22 October 2026. We add
 
 | Question | modelCalls | inputTokens | outputTokens | costUsd |
 |---|---|---|---|---|
-| Which jackets under $150 are in stock? | 2 | 533 | 43 | 0.000075 |
+| Which jackets under \$150 are in stock? | 2 | 533 | 43 | 0.000075 |
 | Is the Summit Waterproof Jacket in stock? If not, what should I buy instead? | 2 | 549 | 52 | 0.000081 |
-| I'm camping this weekend and have $400. What should I buy? | 2 | 543 | 65 | 0.000087 |
+| I'm camping this weekend and have \$400. What should I buy? | 2 | 543 | 65 | 0.000087 |
 | Do you sell kayaks? | 2 | 527 | 44 | 0.000075 |
 | Write me a poem about the weather. | 1 | 188 | 22 | 0.000030 |
 

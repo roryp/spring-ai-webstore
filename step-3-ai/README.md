@@ -61,7 +61,7 @@ The tests don't need Azure, because they use a fake model. Run `./mvnw verify`. 
 
 ## Cost
 
-Models are priced per token. A token is a small piece of text, roughly three-quarters of a word. A question costs about $0.00008, or about 8 cents for 1,000 questions. The container registry costs about $0.17 a day. For the details, see [What it costs](../README.md#what-it-costs).
+Models are priced per token. A token is a small piece of text, roughly three-quarters of a word. A question costs about \$0.00008, or about 8 cents for 1,000 questions. The container registry costs about \$0.17 a day. For the details, see [What it costs](../README.md#what-it-costs).
 
 ## Clean up
 

@@ -67,7 +67,7 @@ Ask your presenter anything. To try it on your own Azure subscription, see the h
 2. `scale: { minReplicas: 0, maxReplicas: 1 }` lets the app scale to zero. The app pulls its image with its managed identity, which has the `AcrPull` role on the registry. That's the `canPullImages` resource.
 3. The `canUseModel` resource in `app.bicep` gives the app's managed identity the **Foundry User** role. There's no API key: `disableLocalAuth: true` switches keys off.
 4. Twice. In the first call, the model asks for the `listProducts` tool. In the second call, it writes the answer from the tool's result. For an off-topic question, like the poem, the model usually answers in one call, because it doesn't need the tool.
-5. About $0.00008, or about 8 cents for 1,000 questions.
+5. About \$0.00008, or about 8 cents for 1,000 questions.
 
 </details>
 

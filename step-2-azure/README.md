@@ -53,7 +53,7 @@ The tests are the same as in step 1, and they don't need Azure. Run `./mvnw veri
 
 ## Cost
 
-The container registry costs about $0.17 a day. The app costs nothing while it's scaled to zero. For the details, see [What it costs](../README.md#what-it-costs).
+The container registry costs about \$0.17 a day. The app costs nothing while it's scaled to zero. For the details, see [What it costs](../README.md#what-it-costs).
 
 ## Clean up
 
