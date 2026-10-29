@@ -65,16 +65,20 @@ Steps 3 and 4 deploy the `gpt-6-luna` model, so pick a region where your subscri
 
 ## What it costs
 
+![Monthly cost of each step: step 1 \$0, step 2 \$5.54, steps 3 and 4 \$6.79 each](docs/costs.png)
+
+The chart shows one month with 10 busy hours and 9,000 questions. Step 1 runs on your laptop for free. The container registry is most of the bill for every deployed step. Adding AI costs about \$1.25 more: a bigger app, plus \$0.71 for 5.3M tokens.
+
 These are Azure retail prices in US dollars for Sweden Central, checked on 22 October 2026 with the [Azure Retail Prices API](https://learn.microsoft.com/rest/api/cost-management/retail-prices/azure-retail-prices).
 
 | Service | Price | In this demo |
 |---|---|---|
-| Container Registry, Basic | \$0.1666 a day | About \$5 a month for each step you deploy. This is the main fixed cost. |
-| Container Apps, Consumption | \$0.000024 per vCPU-second and \$0.000003 per GiB-second while running | The apps scale to zero when they're idle. A busy hour costs about \$0.05 for step 2 (0.5 vCPU, 1 GiB) and about \$0.11 for steps 3 and 4 (1 vCPU, 2 GiB). |
-| GPT-6 Luna, Global Standard | \$0.10 per 1M input tokens and \$0.50 per 1M output tokens | One question uses about 540 input and 50 output tokens, so it costs about \$0.00008. That's about 8 cents for 1,000 questions. |
-| Log Analytics (step 4 only) | The first 5 GB a month are free, then \$2.99 per GB | A demo sends a few megabytes. |
+| Container Registry, Basic | \$0.1666 a day | \$5 a month for each step you deploy, even when idle. |
+| Container Apps, Consumption | \$0.000024 per vCPU-second and \$0.000003 per GiB-second while running | Scales to zero when idle. A busy hour costs about \$0.05 for step 2 (0.5 vCPU, 1 GiB) and \$0.11 for steps 3 and 4 (1 vCPU, 2 GiB). |
+| GPT-6 Luna, Global Standard | \$0.10 per 1M input tokens and \$0.50 per 1M output tokens | A question uses about 540 input and 50 output tokens, so 1,000 questions cost about 8 cents. |
+| Log Analytics (step 4 only) | The first 5 GB a month are free, then \$2.99 per GB | A demo sends a few megabytes, so it's free. |
 
-Anyone with the link can use the chat page. The model deployment accepts at most 30 requests and 30,000 tokens a minute. A question about the products is two requests, so the assistant answers about 15 questions a minute. This also caps the cost: even nonstop traffic costs at most about \$0.90 an hour for the model.
+Anyone with the link can use the chat page. The model deployment accepts at most 30 requests and 30,000 tokens a minute. A question about the products is two requests, so the assistant answers about 15 questions a minute. This caps the model cost at about \$0.90 an hour, even with nonstop traffic.
 
 ## Clean up
 
