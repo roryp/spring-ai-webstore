@@ -115,7 +115,9 @@ export const ACTIONS = [
                 label: {
                     type: "string",
                     maxLength: LIMITS.label,
-                    description: "Optional title, such as the question that was asked. Traces don't record questions.",
+                    description:
+                        "Optional title, such as the question that was asked. Step 4 records the question in the " +
+                        "trail_store.question attribute of its http post /ask request.",
                 },
                 spans: { type: "array", minItems: 1, maxItems: LIMITS.spans, items: spanSchema },
             },

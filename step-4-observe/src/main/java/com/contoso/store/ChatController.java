@@ -1,5 +1,6 @@
 package com.contoso.store;
 
+import io.opentelemetry.api.trace.Span;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -40,6 +41,9 @@ class ChatController {
         if (question.isBlank() || question.length() > 300) {
             return "Please ask a question of up to 300 characters.";
         }
+        // Tracing doesn't record what people ask. Add it to this request's span,
+        // so Application Insights can show each question next to its tokens and cost.
+        Span.current().setAttribute("trail_store.question", question);
         try {
             return chat.prompt().user(question).call().content();
         }

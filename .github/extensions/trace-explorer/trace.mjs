@@ -194,6 +194,9 @@ export const EXAMPLE_TRACE = parseTrace({
             startMs: 0,
             durationMs: 3460,
             description: "The web request: the browser posts the question to /ask, and the answer page comes back.",
+            attributes: {
+                "trail_store.question": "Is the Summit Waterproof Jacket in stock? If not, what should I buy instead?",
+            },
         },
         {
             id: "chat-1",
@@ -234,9 +237,7 @@ export const EXAMPLE_TRACE = parseTrace({
     ],
 });
 
-const EXAMPLE_NOTE =
-    "We added the question ourselves: traces don't record it. " +
-    "Spring AI's own framework spans, such as spring_ai chat_client, are left out.";
+const EXAMPLE_NOTE = "Spring AI's own framework spans, such as spring_ai chat_client, are left out.";
 
 export function formatDuration(ms) {
     if (ms === 0) return "0 ms";

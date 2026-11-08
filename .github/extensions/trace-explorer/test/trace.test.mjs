@@ -23,14 +23,17 @@ test("the example is the real step 4 trace from the README", () => {
     assert.equal(view.summary.modelCalls, 2);
     assert.equal(view.summary.toolCalls, 1);
     assert.deepEqual(view.ticks.map((tick) => tick.label), ["0 s", "1 s", "2 s", "3 s"]);
-    assert.match(view.note, /traces don't record it/);
+    assert.deepEqual(view.spans[0].attributes, [
+        { key: "trail_store.question", value: "Is the Summit Waterproof Jacket in stock? If not, what should I buy instead?" },
+    ]);
+    assert.match(view.note, /framework spans/);
 });
 
 test("a trace from Application Insights, with tokens as text, gets totals and a cost", () => {
     const trace = parseTrace({
         traceId: "4bf92f3577b34da6a3ce929d0e0e4736",
         spans: [
-            { id: "b", parentId: "a", name: "chat gpt-6-luna", startMs: 1010, durationMs: 1000, attributes: { "gen_ai.usage.input_tokens": "188", "gen_ai.usage.output_tokens": "22" } },
+            { id: "b", parentId: "a", name: "chat gpt-6-luna", startMs: 1010, durationMs: 1000, attributes: { "gen_ai.usage.input_tokens": "188", "gen_ai.usage.output_tokens": "18" } },
             { id: "a", name: "POST /ask", startMs: 1000, durationMs: 1500 },
         ],
     });
@@ -40,8 +43,8 @@ test("a trace from Application Insights, with tokens as text, gets totals and a 
     assert.equal(view.spans[0].category, "request");
     assert.equal(view.spans[1].startMs, 10, "times are relative to the first span");
     assert.equal(view.spans[1].model, "gpt-6-luna");
-    assert.equal(view.summary.tokensLabel, "188 in + 22 out");
-    assert.equal(view.summary.cost.label, "$0.000030", "the README's poem question");
+    assert.equal(view.summary.tokensLabel, "188 in + 18 out");
+    assert.equal(view.summary.cost.label, "$0.000028", "the README's poem question");
     assert.equal(view.note, null);
 });
 

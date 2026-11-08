@@ -6,17 +6,17 @@ For the 45-minute workshop, you can also present [the slides](trail-store-worksh
 
 ## Your links
 
+Don't commit your live app links to this public repo. Keep them in a local file that git ignores, such as `script.md` in the repo root.
+
 | Step | App | Code |
 |---|---|---|
 | 1 | <http://localhost:8080> (start it before the event) | [step-1-local](../step-1-local) |
-| 2 | <https://ca-4scup3zlsthac.calmocean-83820dbb.swedencentral.azurecontainerapps.io> | [step-2-azure](../step-2-azure) |
-| 3 | <https://ca-tst5kvf5kukdg.greenpebble-85b82203.swedencentral.azurecontainerapps.io> | [step-3-ai](../step-3-ai) |
-| 3, bonus | <https://ca-mz7m4ugxvje6y.calmmoss-0b015d05.swedencentral.azurecontainerapps.io> | [step-3-copilot-sdk](../step-3-copilot-sdk) |
-| 4 | <https://ca-n4b4dfoneyxru.ashypebble-55a62ce4.swedencentral.azurecontainerapps.io> | [step-4-observe](../step-4-observe) |
+| 2 | Run `azd env get-value WEBSITE_URL` in the folder | [step-2-azure](../step-2-azure) |
+| 3 | Run `azd env get-value WEBSITE_URL` in the folder | [step-3-ai](../step-3-ai) |
+| 3, bonus | Run `azd env get-value WEBSITE_URL` in the folder | [step-3-copilot-sdk](../step-3-copilot-sdk) |
+| 4 | Run `azd env get-value WEBSITE_URL` in the folder | [step-4-observe](../step-4-observe) |
 
-Step 4's traces are in the Application Insights resource `appi-n4b4dfoneyxru`, in the resource group `rg-trail-step4`.
-
-These links belong to the current deployment. If you deploy a step under a new environment name, its URL changes. To see a step's URL, run `azd env get-value WEBSITE_URL` in its folder.
+Step 4's traces are in the Application Insights resource whose name starts with `appi-`, in the resource group shown by `azd env get-value AZURE_RESOURCE_GROUP` in `step-4-observe`.
 
 ## Before the event
 
@@ -24,7 +24,7 @@ The day before:
 
 - [ ] In a new terminal, run `java -version`. It should show version 25. If `mvnw` reports an invalid `JAVA_HOME`, set `JAVA_HOME` to your JDK 25 folder and open a new terminal.
 - [ ] Sign in to the Azure CLI, which is a different tool from `azd`. Run `az login`, and check that `az account show` shows the subscription you deployed to. Then run `az extension add --name containerapp --upgrade` once.
-- [ ] Sign in to the [Azure portal](https://portal.azure.com). Open `appi-n4b4dfoneyxru` > **Logs**, paste the query from the [step 4 README](../step-4-observe/README.md#see-it-in-azure), and save it.
+- [ ] Sign in to the [Azure portal](https://portal.azure.com). Open step 4's `appi-` resource > **Logs**, paste the query from the [step 4 README](../step-4-observe/README.md#see-it-in-azure), and save it.
 - [ ] Rehearse the whole run of show once. While you do, take two screenshots in Application Insights: the query result, and the transaction diagnostics of one `http post /ask` request. They're your fallback if Application Insights is slow on the day.
 
 30 minutes before:
@@ -32,10 +32,11 @@ The day before:
 - [ ] Keep one copy of each Azure app running, so nobody waits for an app to wake up. Otherwise, the first visit after a quiet spell takes about 30 seconds.
 
   ```powershell
-  az containerapp update -g rg-trail-step2 -n ca-4scup3zlsthac --min-replicas 1
-  az containerapp update -g rg-trail-step3 -n ca-tst5kvf5kukdg --min-replicas 1
-  az containerapp update -g rg-trail-step3-copilot -n ca-mz7m4ugxvje6y --min-replicas 1
-  az containerapp update -g rg-trail-step4 -n ca-n4b4dfoneyxru --min-replicas 1
+  foreach ($step in 'step-2-azure', 'step-3-ai', 'step-3-copilot-sdk', 'step-4-observe') {
+    $rg = azd env get-value AZURE_RESOURCE_GROUP --cwd $step
+    $app = az containerapp list -g $rg --query "[0].name" -o tsv
+    az containerapp update -g $rg -n $app --min-replicas 1
+  }
   ```
 
 - [ ] In `step-1-local`, run `.\mvnw.cmd spring-boot:run` and leave the terminal open.
@@ -96,10 +97,10 @@ The script takes 52 minutes. That leaves 8 minutes for questions, or for anythin
 
 - **First:** in the step 4 tab, select **Summit jacket in stock?** Its trace takes one to three minutes to reach Application Insights, so ask now and show the code while you wait.
 - **Show:** the first diagram in the [step 4 README](../step-4-observe/README.md#whats-new): how traces get to Application Insights.
-- **Click:** [pom.xml](../step-4-observe/pom.xml), [application.properties](../step-4-observe/src/main/resources/application.properties), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
+- **Click:** [pom.xml](../step-4-observe/pom.xml), [application.properties](../step-4-observe/src/main/resources/application.properties), the Application Insights part of [app.bicep](../step-4-observe/infra/app.bicep), and the `trail_store.question` line in [ChatController.java](../step-4-observe/src/main/java/com/contoso/store/ChatController.java). Then, in Application Insights, run the saved query. Finally, go to **Investigate** > **Search**, and open an `http post /ask` request.
 - **Say:**
   - "A question about the products is two model calls and one tool call. Here are the tokens, and here's the cost: less than a hundredth of a cent."
-  - "The traces show timings and token counts, but not what people asked."
+  - "Tracing records timings and tokens on its own. The question took one line of code, so each row shows what was asked, next to its cost."
   - "Seeing what your app does, and what it costs, is a big step toward running it in production."
 - **Optional:** "Traces also showed us why the first answer was slow: 13 seconds of setup before the model was even called. With 1 vCPU instead of half, it's under 7." See [What the traces taught us](../step-4-observe/README.md#what-the-traces-taught-us).
 
@@ -134,7 +135,9 @@ In the [workshop](workshop.md), attendees ask questions in the step 3 app. At it
 The day before a workshop, raise the capacity to 300, which is about 150 questions a minute:
 
 ```powershell
-az cognitiveservices account deployment create -g rg-trail-step3 -n ai-tst5kvf5kukdg --deployment-name gpt-6-luna --model-name gpt-6-luna --model-version 2026-09-22 --model-format OpenAI --sku-name GlobalStandard --sku-capacity 300
+$rg = azd env get-value AZURE_RESOURCE_GROUP --cwd step-3-ai
+$ai = az cognitiveservices account list -g $rg --query "[0].name" -o tsv
+az cognitiveservices account deployment create -g $rg -n $ai --deployment-name gpt-6-luna --model-name gpt-6-luna --model-version 2026-09-22 --model-format OpenAI --sku-name GlobalStandard --sku-capacity 300
 ```
 
 The price per token stays the same, and the app keeps running while you change it. Even at 300, if everyone clicks in the same second, some people may see "could not answer right now". Ask them to try again a few seconds later.

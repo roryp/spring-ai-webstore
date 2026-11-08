@@ -1,6 +1,7 @@
 package com.contoso.store;
 
 import java.util.List;
+import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
@@ -76,6 +77,19 @@ class StoreApplicationTests {
         List<SpanData> spans = InMemorySpans.EXPORTER.getFinishedSpanItems();
         assertThat(spans).extracting(SpanData::getName).contains("http post /ask", "spring_ai chat_client");
         assertThat(spans).extracting(SpanData::getTraceId).containsOnly(spans.getFirst().getTraceId());
+    }
+
+    @Test
+    void theTraceRecordsTheQuestion() throws Exception {
+        InMemorySpans.EXPORTER.reset();
+
+        mvc.perform(post("/ask").param("question", "Which jackets are in stock?"));
+
+        SpanData request = InMemorySpans.EXPORTER.getFinishedSpanItems().stream()
+                .filter(span -> span.getName().equals("http post /ask"))
+                .findFirst().orElseThrow();
+        assertThat(request.getAttributes().get(AttributeKey.stringKey("trail_store.question")))
+                .isEqualTo("Which jackets are in stock?");
     }
 
     @TestConfiguration
