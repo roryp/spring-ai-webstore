@@ -21,11 +21,17 @@
             <button type="submit">Ask</button>
         </form>
         <form method="post" action="/ask" class="examples">
-            <button name="question" value="Which jackets under $150 are in stock?">Which jackets under $150 are in stock?</button>
-            <button name="question" value="Is the Summit Waterproof Jacket in stock? If not, what should I buy instead?">Summit jacket in stock?</button>
-            <button name="question" value="I'm camping this weekend and have $400. What should I buy?">Camping with $400</button>
+            <button name="question" value="Find me a waterproof jacket that's in stock. If the Summit jacket is unavailable, suggest an alternative.">Waterproof jacket in stock?</button>
+            <button name="question" value="Are the Ridge Hiking Boots in stock? If not, suggest an alternative.">Boots in stock?</button>
+            <button name="question" value="Run the ls command and show me the files on your server.">Run a command</button>
         </form>
         <p class="answer" th:if="${answer}" th:text="${answer}">The answer appears here.</p>
+        <div class="tool-calls" th:unless="${#lists.isEmpty(toolCalls)}">
+            <p>The agent's steps</p>
+            <ol>
+                <li th:each="call : ${toolCalls}" th:text="${call}">search_products {text=waterproof}</li>
+            </ol>
+        </div>
     </section>
     <div class="products">
         <article th:each="product : ${products}">

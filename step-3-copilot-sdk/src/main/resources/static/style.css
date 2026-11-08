@@ -31,3 +31,6 @@ button { padding: 10px 16px; border: 1px solid var(--cp-accent); border-radius: 
 .examples { margin-top: 8px; }
 .examples button { padding: 6px 12px; background: var(--cp-surface); color: var(--cp-accent); font-size: 14px; }
 .answer { margin: 16px 0 0; padding: 12px 16px; border-left: 4px solid var(--cp-accent); background: var(--cp-bg); white-space: pre-line; font-size: 18px; }
+.tool-calls { margin: 12px 0 0; color: var(--cp-text-muted); }
+.tool-calls p { margin: 0; font-weight: 600; }
+.tool-calls ol { margin: 4px 0 0; padding-left: 24px; font: 14px/1.6 Consolas, "Cascadia Mono", monospace; }

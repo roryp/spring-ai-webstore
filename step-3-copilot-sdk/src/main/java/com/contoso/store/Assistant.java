@@ -5,6 +5,7 @@ import com.azure.core.credential.TokenRequestContext;
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.github.copilot.CopilotClient;
 import com.github.copilot.SystemMessageMode;
+import com.github.copilot.generated.ToolExecutionStartEvent;
 import com.github.copilot.rpc.CopilotClientMode;
 import com.github.copilot.rpc.CopilotClientOptions;
 import com.github.copilot.rpc.PermissionHandler;
@@ -12,12 +13,14 @@ import com.github.copilot.rpc.ProviderConfig;
 import com.github.copilot.rpc.SessionConfig;
 import com.github.copilot.rpc.SystemMessageConfig;
 import com.github.copilot.rpc.ToolDefinition;
+import com.github.copilot.rpc.ToolSet;
 import jakarta.annotation.PreDestroy;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-/** Copilot's agent, running inside the app. It answers questions about the store. */
+/** Copilot's agent, running inside the app. It works out each answer with our tools, one step at a time. */
 @Service
 class Assistant {
 
@@ -48,20 +51,25 @@ class Assistant {
                         .setMode(SystemMessageMode.REPLACE)
                         .setContent("""
                                 You are the Trail Store assistant. Only help with questions about the store.
-                                Call list_products to get products, prices, and stock. Never invent products.
+                                Use the tools to find products, check their stock, and find alternatives. Never invent products or facts.
                                 Answer in plain text, in two or three short sentences.
                                 """))
-                // The agent may use our one tool and nothing else, so it's safe to approve its tool calls.
+                // The agent may use our own tools and nothing else, so it's safe to approve its tool calls.
                 .setTools(ToolDefinition.fromObject(tools))
-                .setAvailableTools(List.of("custom:list_products"))
+                .setAvailableTools(new ToolSet().addCustom("*"))
                 .setOnPermissionRequest(PermissionHandler.APPROVE_ALL);
     }
 
-    String answer(String question) {
+    Answer answer(String question) {
         // Each question gets its own session. We close it, then delete it, so no questions stay on disk.
         var session = copilot.createSession(settings).join();
         try (session) {
-            return session.sendAndWait(question).join().getData().content();
+            // Note each tool the agent calls, in order, so the page can show its steps.
+            var toolCalls = new CopyOnWriteArrayList<String>();
+            session.on(ToolExecutionStartEvent.class,
+                    event -> toolCalls.add(event.getData().toolName() + " " + event.getData().arguments()));
+            var reply = session.sendAndWait(question).join().getData().content();
+            return new Answer(reply, List.copyOf(toolCalls));
         }
         finally {
             copilot.deleteSession(session.getSessionId()).join();

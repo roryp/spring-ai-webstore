@@ -39,7 +39,7 @@ The day before:
   ```
 
 - [ ] In `step-1-local`, run `.\mvnw.cmd spring-boot:run` and leave the terminal open.
-- [ ] Open the app links. In steps 3 and 4, and the step 3 bonus, select **Summit jacket in stock?** once. The first answer after a restart takes about 12 seconds; after that, answers take about 3 seconds. Your step 4 warm-up question also gives the saved query something to show.
+- [ ] Open the app links. In steps 3 and 4, select **Summit jacket in stock?** once. In the step 3 bonus, select **Waterproof jacket in stock?** once. The first answer after a restart takes about 12 seconds; after that, answers take about 3 seconds, or about 5 in the bonus, which takes more steps. Your step 4 warm-up question also gives the saved query something to show.
 - [ ] Open these tabs: this repo on GitHub, the apps, Application Insights **Logs**, and the transaction diagnostics of your warm-up question.
 
 After the event, run the same commands with `--min-replicas 0`, or delete everything as described in [Clean up](../README.md#clean-up).
@@ -87,8 +87,8 @@ The script takes 52 minutes. That leaves 8 minutes for questions, or for anythin
 - **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
 - **Then:** show the two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk) (2 minutes), and say:
   - "The Copilot SDK runs Copilot's agent inside your own app. You give it a goal, and it plans and calls your Java tools, step by step, until the job is done."
-  - "The bonus folder, `step-3-copilot-sdk`, builds this same assistant with the SDK. Its Java releases are still labeled preview."
-- **Optional:** click [Assistant.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/Assistant.java), then select **Summit jacket in stock?** in the step 3 bonus tab. "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our one tool, and nothing else."
+  - "The bonus folder, `step-3-copilot-sdk`, gives the agent three small tools instead of one: search, check stock, and find alternatives. Its Java releases are still labeled preview."
+- **Optional:** click [InventoryTools.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/InventoryTools.java), then select **Waterproof jacket in stock?** in the step 3 bonus tab. "Nobody wrote 'search, then check stock, then find alternatives'. The agent chose those steps, and the page lists them." Then select **Run a command**: "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our three catalog tools, and nothing else."
 
 ![How a question gets answered](diagrams/step-3-ai.png)
 

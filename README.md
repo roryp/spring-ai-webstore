@@ -13,7 +13,7 @@ Each step is a complete Spring Boot app in its own folder, and each adds one ide
 | 3 | [step-3-ai](step-3-ai) | An AI assistant, using Microsoft Foundry, that reads the real stock | On Azure |
 | 4 | [step-4-observe](step-4-observe) | OpenTelemetry: see each request, AI call, token count, and cost | On Azure |
 
-**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk) is a bonus version of step 3: the same assistant, built with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk).
+**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk) is a bonus version of step 3, built with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk): an agent that calls three small catalog tools, step by step, and shows its steps on the page.
 
 ![The store at step 4](docs/screenshots/step-4.png)
 
