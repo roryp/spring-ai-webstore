@@ -14,3 +14,4 @@ test-results/
 node_modules/
 .playwright-mcp/
 .demo/
+/script.md
