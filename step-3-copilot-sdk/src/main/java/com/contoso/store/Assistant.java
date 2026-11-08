@@ -24,6 +24,9 @@ import org.springframework.stereotype.Service;
 @Service
 class Assistant {
 
+    /** Each step costs a model call, so the agent may take at most this many steps for one question. */
+    static final int MAX_STEPS = 8;
+
     private final CopilotClient copilot;
     private final SessionConfig settings;
 
@@ -66,10 +69,24 @@ class Assistant {
         try (session) {
             // Note each tool the agent calls, in order, so the page can show its steps.
             var toolCalls = new CopyOnWriteArrayList<String>();
-            session.on(ToolExecutionStartEvent.class,
-                    event -> toolCalls.add(event.getData().toolName() + " " + event.getData().arguments()));
-            var reply = session.sendAndWait(question).join().getData().content();
-            return new Answer(reply, List.copyOf(toolCalls));
+            session.on(ToolExecutionStartEvent.class, event -> {
+                toolCalls.add(event.getData().toolName() + " " + event.getData().arguments());
+                // Too many steps: stop the agent, so it makes no more model calls.
+                if (toolCalls.size() > MAX_STEPS) {
+                    session.abort();
+                }
+            });
+            try {
+                var reply = session.sendAndWait(question).join().getData().content();
+                return new Answer(reply, List.copyOf(toolCalls));
+            }
+            catch (RuntimeException e) {
+                // If we stopped the agent ourselves, say why, instead of reporting an error.
+                if (toolCalls.size() > MAX_STEPS) {
+                    throw new TooManyStepsException();
+                }
+                throw e;
+            }
         }
         finally {
             copilot.deleteSession(session.getSessionId()).join();
@@ -79,5 +96,13 @@ class Assistant {
     @PreDestroy
     void stop() {
         copilot.close();
+    }
+
+    /** We stopped the agent, because it needed more than {@link #MAX_STEPS} steps. */
+    static class TooManyStepsException extends RuntimeException {
+
+        TooManyStepsException() {
+            super("The agent needed more than " + MAX_STEPS + " steps");
+        }
     }
 }

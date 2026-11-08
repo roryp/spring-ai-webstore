@@ -85,6 +85,16 @@ class StoreApplicationTests {
     }
 
     @Test
+    void askSaysSoWhenTheQuestionNeedsTooManySteps() throws Exception {
+        given(assistant.answer(anyString())).willThrow(new Assistant.TooManyStepsException());
+
+        mvc.perform(post("/ask").param("question", "Check the stock of every product, then find alternatives for each."))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("needs more than 8 steps, so I stopped")))
+                .andExpect(content().string(not(containsString("could not answer right now"))));
+    }
+
+    @Test
     void searchFindsProductsWhoseNameHasEveryWord() {
         assertThat(tools.searchProducts("waterproof"))
                 .containsExactly(new InventoryTools.Match("JKT-003", "Summit Waterproof Jacket", 149));

@@ -38,6 +38,10 @@ class ChatController {
         try {
             return assistant.answer(question);
         }
+        catch (Assistant.TooManyStepsException e) {
+            return new Answer("Sorry, that question needs more than " + Assistant.MAX_STEPS
+                    + " steps, so I stopped. Please ask about fewer products at a time.", List.of());
+        }
         catch (RuntimeException e) {
             log.warn("The AI model call failed", e);
             return new Answer("Sorry, the assistant could not answer right now. Please try again in a moment.", List.of());
