@@ -13,6 +13,7 @@ class StoreController {
         this.catalog = catalog;
     }
 
+    // Handle the GET request for the home page, showing the six products.
     @GetMapping("/")
     String home(Model model) {
         model.addAttribute("products", catalog.all());

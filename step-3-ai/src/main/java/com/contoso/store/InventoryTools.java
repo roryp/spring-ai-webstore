@@ -14,6 +14,7 @@ class InventoryTools {
         this.catalog = catalog;
     }
 
+    // List all products in the store with their details.
     @Tool(description = "List every product in the store with its SKU, name, price in US dollars, and units in stock")
     List<Product> listProducts() {
         return catalog.all();

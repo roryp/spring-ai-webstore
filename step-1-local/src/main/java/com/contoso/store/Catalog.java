@@ -14,6 +14,7 @@ public class Catalog {
             new Product("PCK-001", "Everyday Trail Pack", 59, 10),
             new Product("TNT-001", "Two-Person Tent", 189, 5));
 
+    // Return the store's six products.
     public List<Product> all() {
         return PRODUCTS;
     }

@@ -21,6 +21,7 @@ class ChatController {
         this.catalog = catalog;
     }
 
+    // Handle the POST request for asking a question.
     @PostMapping("/ask")
     String ask(@RequestParam String question, Model model) {
         var answer = answer(question);
@@ -31,6 +32,7 @@ class ChatController {
         return "index";
     }
 
+    // Answer the user's question with Copilot's agent, with basic validation and error handling.
     private Answer answer(String question) {
         if (question.isBlank() || question.length() > 300) {
             return new Answer("Please ask a question of up to 300 characters.", List.of());

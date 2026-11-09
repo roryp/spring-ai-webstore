@@ -17,6 +17,7 @@ class ChatController {
     private final ChatClient chat;
     private final Catalog catalog;
 
+    // Constructor for ChatController, initializing the chat client and catalog.
     ChatController(ChatClient.Builder builder, InventoryTools tools, Catalog catalog) {
         this.chat = builder
                 .defaultSystem("""
@@ -29,6 +30,7 @@ class ChatController {
         this.catalog = catalog;
     }
 
+    // Handle the POST request for asking a question.
     @PostMapping("/ask")
     String ask(@RequestParam String question, Model model) {
         model.addAttribute("products", catalog.all());
@@ -37,6 +39,7 @@ class ChatController {
         return "index";
     }
 
+    // Answer the user's question using the AI model, with basic validation and error handling.
     private String answer(String question) {
         if (question.isBlank() || question.length() > 300) {
             return "Please ask a question of up to 300 characters.";

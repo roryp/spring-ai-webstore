@@ -30,6 +30,7 @@ class Assistant {
     private final CopilotClient copilot;
     private final SessionConfig settings;
 
+    // Constructor for Assistant, locking Copilot's agent down to our model, our instructions, and our tools.
     Assistant(InventoryTools tools, @Value("${AZURE_OPENAI_ENDPOINT}") String endpoint) {
         // Empty mode switches off everything we don't ask for, such as Copilot's tools for files and commands.
         this.copilot = new CopilotClient(new CopilotClientOptions()
@@ -63,6 +64,7 @@ class Assistant {
                 .setOnPermissionRequest(PermissionHandler.APPROVE_ALL);
     }
 
+    // Run the agent loop for one question in a new session, noting each tool it calls.
     Answer answer(String question) {
         // Each question gets its own session. We close it, then delete it, so no questions stay on disk.
         var session = copilot.createSession(settings).join();
@@ -93,6 +95,7 @@ class Assistant {
         }
     }
 
+    // Stop Copilot's agent runtime when the app shuts down.
     @PreDestroy
     void stop() {
         copilot.close();
