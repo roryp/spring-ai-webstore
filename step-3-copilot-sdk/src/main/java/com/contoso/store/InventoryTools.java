@@ -11,28 +11,21 @@ import org.springframework.stereotype.Component;
 @Component
 class InventoryTools {
 
-    /** A search result: a product's SKU, name, and price, but not its stock. */
-    record Match(String sku, String name, int price) {
-    }
-
     private final Catalog catalog;
 
     InventoryTools(Catalog catalog) {
         this.catalog = catalog;
     }
 
-    @CopilotTool("Search the store's products by name. Returns the SKU, name, and price in US dollars of each match, but not the stock")
-    List<Match> searchProducts(@CopilotToolParam("Words to look for in product names, such as waterproof jacket") String text) {
+    @CopilotTool("Search the store's products by name or SKU. Returns the SKU, name, price in US dollars, and units in stock of each match")
+    List<Product> searchProducts(@CopilotToolParam("Words to look for in product names or SKUs, such as waterproof jacket or JKT-003") String text) {
         var words = text.toLowerCase().split("\\s+");
         return catalog.all().stream()
-                .filter(product -> Arrays.stream(words).allMatch(product.name().toLowerCase()::contains))
-                .map(product -> new Match(product.sku(), product.name(), product.price()))
+                .filter(product -> {
+                    var searchable = (product.sku() + " " + product.name()).toLowerCase();
+                    return Arrays.stream(words).allMatch(searchable::contains);
+                })
                 .toList();
-    }
-
-    @CopilotTool("Check how many units of one product are in stock")
-    int checkStock(@CopilotToolParam("The product's SKU, such as JKT-001") String sku) {
-        return product(sku).stock();
     }
 
     @CopilotTool("Find other products of the same kind that are in stock, closest in price first. Returns their SKU, name, price in US dollars, and units in stock")

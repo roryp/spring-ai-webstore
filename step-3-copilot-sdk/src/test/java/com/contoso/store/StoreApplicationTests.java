@@ -47,14 +47,14 @@ class StoreApplicationTests {
     @Test
     void askShowsTheAnswerAndTheAgentsSteps() throws Exception {
         given(assistant.answer(anyString())).willReturn(new Answer("A fake answer",
-                List.of("search_products {text=waterproof}", "check_stock {sku=JKT-003}")));
+                List.of("search_products {text=waterproof}", "find_alternatives {sku=JKT-003}")));
 
         mvc.perform(post("/ask").param("question", "Find me a waterproof jacket that's in stock."))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("A fake answer")))
                 .andExpect(content().string(containsString("The agent's steps")))
                 .andExpect(content().string(containsString("search_products {text=waterproof}")))
-                .andExpect(content().string(containsString("check_stock {sku=JKT-003}")))
+                .andExpect(content().string(containsString("find_alternatives {sku=JKT-003}")))
                 .andExpect(content().string(containsString("Trail Rain Jacket")));
     }
 
@@ -88,30 +88,20 @@ class StoreApplicationTests {
     void askSaysSoWhenTheQuestionNeedsTooManySteps() throws Exception {
         given(assistant.answer(anyString())).willThrow(new Assistant.TooManyStepsException());
 
-        mvc.perform(post("/ask").param("question", "Check the stock of every product, then find alternatives for each."))
+        mvc.perform(post("/ask").param("question", "For each of the six products in the store, search for it by name, then find alternatives for it."))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("needs more than 8 steps, so I stopped")))
                 .andExpect(content().string(not(containsString("could not answer right now"))));
     }
 
     @Test
-    void searchFindsProductsWhoseNameHasEveryWord() {
+    void searchFindsProductsByNameOrSkuWithTheirStock() {
         assertThat(tools.searchProducts("waterproof"))
-                .containsExactly(new InventoryTools.Match("JKT-003", "Summit Waterproof Jacket", 149));
-        assertThat(tools.searchProducts("summit JACKET")).extracting(InventoryTools.Match::sku).containsExactly("JKT-003");
+                .containsExactly(new Product("JKT-003", "Summit Waterproof Jacket", 149, 0));
+        assertThat(tools.searchProducts("summit JACKET")).extracting(Product::sku).containsExactly("JKT-003");
+        assertThat(tools.searchProducts("tnt-001")).containsExactly(new Product("TNT-001", "Two-Person Tent", 189, 5));
         assertThat(tools.searchProducts("Jacket")).hasSize(3);
         assertThat(tools.searchProducts("kayak")).isEmpty();
-    }
-
-    @Test
-    void checkStockReadsTheRealCatalog() {
-        assertThat(tools.checkStock("JKT-003")).isZero();
-        assertThat(tools.checkStock("JKT-001")).isEqualTo(12);
-    }
-
-    @Test
-    void checkStockSaysSoWhenTheSkuIsUnknown() {
-        assertThatThrownBy(() -> tools.checkStock("KYK-001")).hasMessage("No product has the SKU KYK-001");
     }
 
     @Test
@@ -121,8 +111,13 @@ class StoreApplicationTests {
     }
 
     @Test
+    void findAlternativesSaysSoWhenTheSkuIsUnknown() {
+        assertThatThrownBy(() -> tools.findAlternatives("KYK-001")).hasMessage("No product has the SKU KYK-001");
+    }
+
+    @Test
     void copilotToolTurnsTheMethodsIntoTools() {
         assertThat(ToolDefinition.fromObject(tools)).extracting(ToolDefinition::name)
-                .containsExactlyInAnyOrder("search_products", "check_stock", "find_alternatives");
+                .containsExactlyInAnyOrder("search_products", "find_alternatives");
     }
 }

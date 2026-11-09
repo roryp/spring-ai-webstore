@@ -88,8 +88,8 @@ The script takes 52 minutes. That leaves 8 minutes for questions, or for anythin
 - **Optional:** ask "Write me a poem about the weather." The assistant stays on topic.
 - **Then:** show the two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk) (2 minutes), and say:
   - "The Copilot SDK runs Copilot's agent inside your own app. You give it a goal, and it plans and calls your Java tools, step by step, until the job is done."
-  - "The bonus folder, `step-3-copilot-sdk`, gives the agent three small tools instead of one: search, check stock, and find alternatives. Its Java releases are still labeled preview."
-- **Optional:** click [InventoryTools.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/InventoryTools.java), then select **Waterproof jacket in stock?** in the step 3 bonus tab. "Nobody wrote 'search, then check stock, then find alternatives'. The agent chose those steps, and the page lists them." Then select **Run a command**: "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our three catalog tools, and nothing else."
+  - "The bonus folder, `step-3-copilot-sdk`, gives the agent two small tools instead of one: search, which also returns stock, and find alternatives. Its Java releases are still labeled preview."
+- **Optional:** click [InventoryTools.java](../step-3-copilot-sdk/src/main/java/com/contoso/store/InventoryTools.java), then select **Waterproof jacket in stock?** in the step 3 bonus tab. "Nobody wrote 'search, then find alternatives if it's sold out'. The agent chose those steps, and the page lists them." Then select **Run a command**: "Copilot's agent can run commands and edit files, so we switch all of that off. It may use our two catalog tools, and nothing else."
 
 ![How a question gets answered](diagrams/step-3-ai.png)
 

@@ -43,7 +43,7 @@ The whole room shares one model. If you see "could not answer right now", wait a
 
 - **Find:** Where does the app get permission to use the model? Is there an API key anywhere?
 
-To finish step 3, your presenter shows two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk): there, Copilot's agent finds a waterproof jacket in stock with three small tools, and the page shows each step it took.
+To finish step 3, your presenter shows two slides on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk). If you have time, open the bonus folder [step-3-copilot-sdk](../step-3-copilot-sdk): there, Copilot's agent finds a waterproof jacket in stock with two small tools, and the page shows each step it took.
 
 ## 5. Step 4: see inside (8 minutes)
 

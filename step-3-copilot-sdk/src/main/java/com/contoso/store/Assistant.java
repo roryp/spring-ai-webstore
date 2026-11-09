@@ -54,7 +54,7 @@ class Assistant {
                         .setMode(SystemMessageMode.REPLACE)
                         .setContent("""
                                 You are the Trail Store assistant. Only help with questions about the store.
-                                Use the tools to find products, check their stock, and find alternatives. Never invent products or facts.
+                                Use the tools to find products and their stock, and to find alternatives. Never invent products or facts.
                                 Answer in plain text, in two or three short sentences.
                                 """))
                 // The agent may use our own tools and nothing else, so it's safe to approve its tool calls.
