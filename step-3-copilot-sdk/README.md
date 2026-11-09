@@ -36,7 +36,7 @@ The Azure resources in [infra/app.bicep](infra/app.bicep) are the same as in ste
 Follow the numbers in the diagram:
 
 - **1:** You ask, "Find me a waterproof jacket that's in stock."
-- **2:** `Assistant` opens a new Copilot session and sends your question. The first question also starts Copilot's agent runtime, which runs next to the app, in the same container.
+- **2:** `Assistant` opens a new Copilot session and sends your question. Copilot's agent runtime runs next to the app, in the same container. The app starts it when the app itself starts.
 - **3 to 6, repeated:** The agent sends the question, and the facts so far, to the model in Foundry. The model asks for one of our two tools, and the SDK runs that Java method. This repeats until the model has the facts it needs.
 - **7 and 8:** The model answers from those facts.
 - **9 and 10:** The agent hands back the answer, and `Assistant` hands back the tools it called. `Assistant` deletes the session, and both appear on the page.
@@ -77,7 +77,7 @@ azd up
 
 Use a new environment name, such as `trail-step3-copilot`. As in step 3, pick a region where your subscription has quota for `gpt-6-luna`. We used Sweden Central.
 
-The app scales to zero when nobody's using it. The first visit after a quiet spell takes about 20 seconds, while Azure starts the app. The first question then takes about 15 seconds, while the app unpacks and starts Copilot's agent runtime and signs in to Foundry. After that, the waterproof jacket question takes about 5 seconds, because the agent calls the model three times: twice to pick a tool, and once to answer.
+The app scales to zero when nobody's using it. The first visit after a quiet spell takes about 20 seconds, while Azure starts the app. As it starts, the app also starts Copilot's agent runtime and signs in to Foundry, in the background, so the first question doesn't wait about 8 seconds for them. The waterproof jacket question takes about 5 seconds, because the agent calls the model three times: twice to pick a tool, and once to answer. Each of those calls took about 2 seconds in our tests, twice as long as a call in step 3, which uses Foundry's Chat Completions API instead of the Responses API the SDK uses.
 
 ## Test it
 

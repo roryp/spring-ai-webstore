@@ -62,6 +62,10 @@ class Assistant {
                 .setTools(ToolDefinition.fromObject(tools))
                 .setAvailableTools(new ToolSet().addCustom("*"))
                 .setOnPermissionRequest(PermissionHandler.APPROVE_ALL);
+
+        // Start the agent runtime and sign in now, in the background, so the first question doesn't wait about 8 seconds for them.
+        copilot.start();
+        credential.getToken(foundry).subscribe();
     }
 
     // Run the agent loop for one question in a new session, noting each tool it calls.
