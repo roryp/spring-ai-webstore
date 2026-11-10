@@ -8,12 +8,12 @@ Each step is a complete Spring Boot app in its own folder, and each adds one ide
 
 | Step | Folder | The one new idea | Runs |
 |---|---|---|---|
-| 1 | [step-1-local](step-1-local) | A plain Spring Boot store with six products | On your laptop |
-| 2 | [step-2-azure](step-2-azure) | The same app on Azure Container Apps, deployed with one command | On Azure |
-| 3 | [step-3-ai](step-3-ai) | An AI assistant, using Microsoft Foundry, that reads the real stock | On Azure |
-| 4 | [step-4-observe](step-4-observe) | OpenTelemetry: see each request, AI call, token count, and cost | On Azure |
+| 1 | [step-1-local](step-1-local/README.md) | A plain Spring Boot store with six products | On your laptop |
+| 2 | [step-2-azure](step-2-azure/README.md) | The same app on Azure Container Apps, deployed with one command | On Azure |
+| 3 | [step-3-ai](step-3-ai/README.md) | An AI assistant, using Microsoft Foundry, that reads the real stock | On Azure |
+| 4 | [step-4-observe](step-4-observe/README.md) | OpenTelemetry: see each request, AI call, token count, and cost | On Azure |
 
-**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk) is a bonus version of step 3, built with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk): an agent that calls two small catalog tools, step by step, and shows its steps on the page.
+**Going further:** [step-3-copilot-sdk](step-3-copilot-sdk/README.md) is a bonus version of step 3, built with the [GitHub Copilot SDK](https://github.com/github/copilot-sdk): an agent that calls two small catalog tools, step by step, and shows its steps on the page.
 
 ![The store at step 4](docs/screenshots/step-4.png)
 

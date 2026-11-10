@@ -69,4 +69,4 @@ Models are priced per token. A token is a small piece of text, roughly three-qua
 azd down --purge
 ```
 
-**Next:** [step 4](../step-4-observe) shows what happens inside each answer.
+**Next:** [step 4](../step-4-observe/README.md) shows what happens inside each answer.

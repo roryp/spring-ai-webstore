@@ -61,4 +61,4 @@ The container registry costs about \$0.17 a day. The app costs nothing while it'
 azd down --purge
 ```
 
-**Next:** [step 3](../step-3-ai) adds an AI assistant.
+**Next:** [step 3](../step-3-ai/README.md) adds an AI assistant.

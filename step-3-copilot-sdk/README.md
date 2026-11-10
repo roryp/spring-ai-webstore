@@ -1,6 +1,6 @@
 # Step 3, going further · An agent that works it out, with the GitHub Copilot SDK
 
-In [step 3](../step-3-ai), the model gets one tool that lists every product, and it answers in one go. Here, the assistant runs on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk), which puts Copilot's **agent** inside your app. The agent gets two small tools instead of one, and it decides which to call, one step at a time, until it can answer. The page shows each step.
+In [step 3](../step-3-ai/README.md), the model gets one tool that lists every product, and it answers in one go. Here, the assistant runs on the [GitHub Copilot SDK](https://github.com/github/copilot-sdk), which puts Copilot's **agent** inside your app. The agent gets two small tools instead of one, and it decides which to call, one step at a time, until it can answer. The page shows each step.
 
 The store, the six products, Microsoft Foundry, and the managed identity are the same as in step 3.
 
@@ -95,4 +95,4 @@ Taking more steps costs more than step 3, but it's still small. The waterproof j
 azd down --purge
 ```
 
-**Next:** [step 4](../step-4-observe) shows what happens inside each answer, using step 3's Spring AI version.
+**Next:** [step 4](../step-4-observe/README.md) shows what happens inside each answer, using step 3's Spring AI version.

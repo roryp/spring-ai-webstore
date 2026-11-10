@@ -41,4 +41,4 @@ To run the test, use `./mvnw verify`. On Windows, use `.\mvnw.cmd verify`.
 - You build, start, and update it by hand.
 - It works because your laptop happens to have Java 25. Nothing describes what it needs to run.
 
-**Next:** [step 2](../step-2-azure) runs the same app on Azure.
+**Next:** [step 2](../step-2-azure/README.md) runs the same app on Azure.
